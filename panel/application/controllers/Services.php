@@ -66,7 +66,7 @@ class Services extends CI_Controller
 
         if($validate){
 
-            $insert = $this->services_model->add(
+            $insert = $this->services_model->save(
                 array(
                     /* "url"           => convertToSEO($this->input->post("title")), */
                     "name"         => $this->input->post("name"),

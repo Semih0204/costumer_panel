@@ -3,15 +3,15 @@
         <div class="media">
             <div class="media-left">
                 <div class="avatar avatar-md avatar-circle">
-                    <a href="javascript:void(0)"><img class="img-responsive" src="<?php echo base_url("assets"); ?>/assets/images/221.jpg" alt="avatar"/></a>
+                    <a href="#"><img class="img-responsive" src="<?php echo base_url("assets"); ?>/assets/images/221.jpg" alt="avatar"/></a>
                 </div><!-- .avatar -->
             </div>
             <div class="media-body">
                 <div class="foldable">
-                    <h5><a href="javascript:void(0)" class="username">John Doe</a></h5>
+                    <h5><a href="#" class="username">John Doe</a></h5>
                     <ul>
                         <li class="dropdown">
-                            <a href="javascript:void(0)" class="dropdown-toggle usertitle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a href="#" class="dropdown-toggle usertitle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <small>Web Developer</small>
                                 <span class="caret"></span>
                             </a>
@@ -55,7 +55,7 @@
 
 
                 <li>
-                    <a href="javascript:void(0)">
+                    <a href="#">
                         <i class="menu-icon zmdi zmdi-view-dashboard zmdi-hc-lg"></i>
                         <span class="menu-text">Dashboard</span>
                     </a>
@@ -64,7 +64,7 @@
                 
 
                 <!-- <li class="has-submenu">
-                    <a href="javascript:void(0)" class="submenu-toggle">
+                    <a href="#" class="submenu-toggle">
                         <i class="menu-icon zmdi zmdi-apps zmdi-hc-lg"></i>
                         <span class="menu-text">Galeriler</span>
                         <i class="menu-caret zmdi zmdi-hc-sm zmdi-chevron-right"></i>
@@ -85,7 +85,7 @@
                 </li>
 
                 <li>
-                    <a href="<?php echo base_url("product"); ?>">
+                    <a href="#">
                         <i class="menu-icon fa fa-cubes"></i>
                         <span class="menu-text">Şubeler</span>
                     </a>
@@ -106,49 +106,49 @@
                 </li>
 
                 <li>
-                    <a href="javascript:void(0)">
+                    <a href="#">
                         <i class="menu-icon fa fa-user-secret"></i>
                         <span class="menu-text">Kullanıcılar</span>
                     </a>
                 </li>
 
                 <li>
-                    <a href="<?php echo base_url("product"); ?>">
+                    <a href="#">
                         <i class="menu-icon fa fa-cubes"></i>
                         <span class="menu-text">Çalışanlar</span>
                     </a>
                 </li>
 
                 <li>
-                    <a href="<?php echo base_url("product"); ?>">
+                    <a href="#">
                         <i class="menu-icon fa fa-cubes"></i>
                         <span class="menu-text">Randevular</span>
                     </a>
                 </li>
 
                 <li>
-                    <a href="<?php echo base_url("product"); ?>">
+                    <a href="#">
                         <i class="menu-icon fa fa-cubes"></i>
                         <span class="menu-text">Kasa</span>
                     </a>
                 </li>
 
                 <li>
-                    <a href="<?php echo base_url("product"); ?>">
+                    <a href="#">
                         <i class="menu-icon fa fa-cubes"></i>
                         <span class="menu-text">Çıkış Yap</span>
                     </a>
                 </li>
 
                 <li>
-                    <a href="javascript:void(0)">
+                    <a href="#">
                         <i class="menu-icon zmdi zmdi-lamp zmdi-hc-lg"></i>
                         <span class="menu-text">Popup Hizmeti</span>
                     </a>
                 </li>
 
                 <li>
-                    <a href="javascript:void(0)">
+                    <a href="#">
                         <i class="menu-icon zmdi zmdi-settings zmdi-hc-lg"></i>
                         <span class="menu-text">Ayarlar</span>
                     </a>

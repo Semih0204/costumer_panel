@@ -45,11 +45,14 @@ class Product extends CI_Controller
     }
 
     public function save(){
+        //echo pathinfo($_FILES["img"]["name"], PATHINFO_FILENAME);
+       // print_r($_FILES["img"]);
 
         $this->load->library("form_validation");
 
         // Kurallar yazilir..
         $this->form_validation->set_rules("name", "Başlık", "required|trim");
+        $this->form_validation->set_rules("price", "Fiyat", "required|trim");
 
         $this->form_validation->set_message(
             array(
@@ -58,38 +61,94 @@ class Product extends CI_Controller
         );
 
         // Form Validation Calistirilir..
-        // TRUE - FALSE
         $validate = $this->form_validation->run();
+        // TRUE - FALSE
 
-        // Monitör Askısı
-        // monitor-askisi
-
+        //validate değeri eğer true ise
         if($validate){
+            $uploaded_file = "";
 
-            $insert = $this->product_model->add(
+            if($_FILES["img"]["name"] == "") {
+                $uploaded_file = "default.jpg";
+                $upload = true;
+
+            } else {
+
+                //Resimin Yüklenmesi
+                //Yüklenecek olan resmin isminin isminin otomatik olarak düzenlenmesi
+
+                $file_name = convertToSEO(pathinfo($_FILES["img"]["name"], PATHINFO_FILENAME)) . "." . pathinfo($_FILES["img"]["name"], PATHINFO_EXTENSION);
+
+                //Dosyanın adını uzantı bölümüne kadar pathinfo_file name ile alınır ve seo uyumlu hale gelecek şekilde değiştirilir.
+                //Yüklenecek dosyanın uzantısına ulaşmak içinse PATHINFO_EXTENSION kullanılır ve seo uyumlu olacak şekilde güncellenir.
+
+                $config["allowed_types"]    = "jpg|jpeg|png";
+                $config["upload_path"]      = "uploads/$this->viewFolder/";
+                $config["file_name"]        = "$file_name";
+
+                $this->load->library("upload", $config);
+                $upload = $this->upload->do_upload("img");
+                $uploaded_file = $this->upload->data("file_name");
+
+            }
+
+            /*$insert = $this->product_model->add(
                 array(
+                    "image_url"    => $uploaded_file,
                     "name"         => $this->input->post("name"),
+                    "price"         => $this->input->post("price"),
+                    "url"           => convertToSEO($this->input->post("name")),
                     "description"   => $this->input->post("description"),
-                    "url"           => convertToSEO($this->input->post("title")),
                     "rank"          => 0,
                     "isActive"      => 1,
                     "createdAt"     => date("Y-m-d H:i:s")
                 )
-            );
+            );*/
+            if ($upload) {
+                $data = array(
+                    "image_url"     => $uploaded_file,
+                    "name"          => $this->input->post("name"),
+                    "price"         => $this->input->post("price"),
+                    "url"           => convertToSEO($this->input->post("name")),
+                    "description"   => $this->input->post("description"),
+                    "rank"          => 0,
+                    "isActive"      =>1,
+                    "createdAt"     => date("Y-m-d H:i:s")
+                );
+            } else {
+                $alert = array(
+                    "title" => "İşlem Başarısız",
+                    "text"  => "KAyıt işlemi sırasında bir problem oldu",
+                    "type" => "error"
+                );
+
+                $this->session->set_flashdata("alert", $alert);
+                /*redirect(base_url("admin/product/new_form"));*/
+            }
+
+
+            $insert = $this->product_model->add($data);
 
             // TODO Alert sistemi eklenecek...
-            if($insert){
+            if($upload){
 
+                $alert = array(
+                    "title" => "işlem Başarılı",
+                    "text"  => "Kayıt işlemi başarılı bir şekilde gerçekleşti..",
+                    "type"  => "success"
+                );
                 redirect(base_url("product"));
 
             } else {
 
+                $alert = array(
+                    "title" => "İşlem Gerçekleştirilmedi",
+                    "text" => "Kayıt işlemi sırasında bir problemle karşılaştık!",
+                    "type"  => "error"
+                );
                 redirect(base_url("product"));
-
             }
-
         } else {
-
             $viewData = new stdClass();
 
             /** View'e gönderilecek Değişkenlerin Set Edilmesi.. */
@@ -156,8 +215,8 @@ class Product extends CI_Controller
                 ),
                 array(
                     "name"         => $this->input->post("name"),
-                    "description"   => $this->input->post("description"),
-                    "url"           => convertToSEO($this->input->post("title")),
+                    "price"         => $this->input->post("price"),
+                    "description"   => $this->input->post("description")
                 )
             );
 

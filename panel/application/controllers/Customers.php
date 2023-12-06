@@ -66,7 +66,7 @@ class Customers extends CI_Controller
 
         if($validate){
 
-            $insert = $this->Customers_model->add(
+            $insert = $this->Customers_model->save(
                 array(
                     /* "url"           => convertToSEO($this->input->post("title")), */
                     "name"         => $this->input->post("name"),
