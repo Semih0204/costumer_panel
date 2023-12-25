@@ -1,9 +1,9 @@
 <?php
 
-class Product_model extends CI_Model
+class Branches_model extends CI_Model
 {
 
-    public $tableName = "products";
+    public $tableName = "branches";
 
     public function __construct()
     {

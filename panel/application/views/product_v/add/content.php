@@ -23,15 +23,18 @@
                             <input type="text" class="form-control" placeholder="Ürün Adını Giriniz" name="name">
                         </div>
                         <?php if(isset($form_error)){ ?>
-                            <small class="pull-right input-form-error"> <?php echo form_error("title"); ?></small>
+                            <small class="input-form-error"> <?php echo form_error("name"); ?></small>
                         <?php } ?>
                     </div>
 
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Ürün Fiyatı</label>
                         <div class="col-sm-6">
-                            <input type="number" class="form-control" name="price">
+                            <input type="number" class="form-control" PLACEHOLDER="Ürün Fiyatını Giriniz" name="price">
                         </div>
+                        <?php if(isset($form_error)){ ?>
+                            <small class="input-form-error"> <?php echo form_error("price"); ?></small>
+                        <?php } ?>
                     </div>
 
                     <div class="form-group">

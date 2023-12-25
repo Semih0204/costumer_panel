@@ -1,6 +1,6 @@
 <?php
 
-class Customers extends CI_Controller
+class Staff extends CI_Controller
 {
     public $viewFolder = "";
 
@@ -9,9 +9,9 @@ class Customers extends CI_Controller
 
         parent::__construct();
 
-        $this->viewFolder = "Customers_v";
+        $this->viewFolder = "Staff_v";
 
-        $this->load->model("Customers_model");
+        $this->load->model("Staff_model");
 
     }
 
@@ -20,7 +20,7 @@ class Customers extends CI_Controller
         $viewData = new stdClass();
 
         /** Tablodan Verilerin Getirilmesi.. */
-        $items = $this->Customers_model->get_all(
+        $items = $this->Staff_model->get_all(
             array(), "rank ASC"
         );
 
@@ -62,23 +62,17 @@ class Customers extends CI_Controller
         // TRUE - FALSE
         $validate = $this->form_validation->run();
 
-        // Monitör Askısı
-        // monitor-askisi
-
         if($validate){
 
-            $insert = $this->Customers_model->save(
+            $insert = $this->Staff_model->save(
                 array(
-                    /* "url"           => convertToSEO($this->input->post("title")), */
+                    "id_branches"  => $this->input->post("id_branches"),
                     "name"         => $this->input->post("name"),
                     "surname"         => $this->input->post("surname"),
-                    "gender"         => $this->input->post("gender"),
-                    "birthday"         => $this->input->post("birthday"),
-                    "description"   => $this->input->post("description"),
-                    "email"   => $this->input->post("email"),
+                    "position"         => $this->input->post("position"),
                     "gsm"   => $this->input->post("gsm"),
-                    "adress"   => $this->input->post("adress"),
-                    "rank"          => 0,
+                    "email"   => $this->input->post("email"),
+                    "wage"   => $this->input->post("wage"),
                     "isActive"      => 1,
                     "createdAt"     => date("Y-m-d H:i:s")
                 )
@@ -87,11 +81,11 @@ class Customers extends CI_Controller
             // TODO Alert sistemi eklenecek...
             if($insert){
 
-                redirect(base_url("Customers"));
+                redirect(base_url("Staff"));
 
             } else {
 
-                redirect(base_url("Customers"));
+                redirect(base_url("Staff"));
 
             }
 
@@ -119,7 +113,7 @@ class Customers extends CI_Controller
         $viewData = new stdClass();
 
         /** Tablodan Verilerin Getirilmesi.. */
-        $item = $this->Customers_model->get(
+        $item = $this->Staff_model->get(
             array(
                 "id"    => $id,
             )
@@ -154,32 +148,29 @@ class Customers extends CI_Controller
 
         if($validate){
 
-            $update = $this->Customers_model->update(
+            $update = $this->Staff_model->update(
                 array(
                     "id"    => $id
                 ),
                 array(
+                    "id_branches"  => $this->input->post("id_branches"),
                     "name"         => $this->input->post("name"),
                     "surname"         => $this->input->post("surname"),
-                    "gender"         => $this->input->post("gender"),
-                    "birthday"         => $this->input->post("birthday"),
-                    "description"   => $this->input->post("description"),
-                    "email"   => $this->input->post("email"),
+                    "position"         => $this->input->post("position"),
                     "gsm"   => $this->input->post("gsm"),
-                    "adress"   => $this->input->post("adress"),
-                    "description"   => $this->input->post("description"),
-                    
+                    "email"   => $this->input->post("email"),
+                    "wage"   => $this->input->post("wage"),
                 )
             );
 
             // TODO Alert sistemi eklenecek...
             if($update){
 
-                redirect(base_url("Customers"));
+                redirect(base_url("Staff"));
 
             } else {
 
-                redirect(base_url("Customers"));
+                redirect(base_url("Staff"));
 
             }
 
@@ -188,7 +179,7 @@ class Customers extends CI_Controller
             $viewData = new stdClass();
 
             /** Tablodan Verilerin Getirilmesi.. */
-            $item = $this->Customers_model->get(
+            $item = $this->Staff_model->get(
                 array(
                     "id"    => $id,
                 )
@@ -212,7 +203,7 @@ class Customers extends CI_Controller
 
     public function delete($id){
 
-        $delete = $this->Customers_model->delete(
+        $delete = $this->Staff_model->delete(
             array(
                 "id"    => $id
             )
@@ -220,9 +211,9 @@ class Customers extends CI_Controller
 
         // TODO Alert Sistemi Eklenecek...
         if($delete){
-            redirect(base_url("Customers"));
+            redirect(base_url("Staff"));
         } else {
-            redirect(base_url("Customers"));
+            redirect(base_url("Staff"));
         }
 
     }
@@ -233,7 +224,7 @@ class Customers extends CI_Controller
 
             $isActive = ($this->input->post("data") === "true") ? 1 : 0;
 
-            $this->Customers_model->update(
+            $this->Staff_model->update(
                 array(
                     "id"    => $id
                 ),
@@ -255,7 +246,7 @@ class Customers extends CI_Controller
 
         foreach ($items as $rank => $id){
 
-            $this->Customers_model->update(
+            $this->Staff_model->update(
                 array(
                     "id"        => $id,
                     "rank !="   => $rank

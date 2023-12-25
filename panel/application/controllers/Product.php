@@ -117,7 +117,7 @@ class Product extends CI_Controller
                 );
             } else {
                 $alert = array(
-                    "title" => "İşlem Başarısız",
+                    "name" => "İşlem Başarısız",
                     "text"  => "KAyıt işlemi sırasında bir problem oldu",
                     "type" => "error"
                 );
@@ -193,6 +193,7 @@ class Product extends CI_Controller
 
         // Kurallar yazilir..
         $this->form_validation->set_rules("name", "Başlık", "required|trim");
+        $this->form_validation->set_rules("price", "Ücret", "required|trim");
 
         $this->form_validation->set_message(
             array(
@@ -204,16 +205,40 @@ class Product extends CI_Controller
         // TRUE - FALSE
         $validate = $this->form_validation->run();
 
-        // Monitör Askısı
-        // monitor-askisi
-
         if($validate){
+
+            $uploaded_file = "";
+
+            if($_FILES["img"]["name"] == "") {
+                $uploaded_file = "default.jpg";
+                $upload = true;
+
+            } else {
+
+                //Resimin Yüklenmesi
+                //Yüklenecek olan resmin isminin isminin otomatik olarak düzenlenmesi
+
+                $file_name = convertToSEO(pathinfo($_FILES["img"]["name"], PATHINFO_FILENAME)) . "." . pathinfo($_FILES["img"]["name"], PATHINFO_EXTENSION);
+
+                //Dosyanın adını uzantı bölümüne kadar pathinfo_file name ile alınır ve seo uyumlu hale gelecek şekilde değiştirilir.
+                //Yüklenecek dosyanın uzantısına ulaşmak içinse PATHINFO_EXTENSION kullanılır ve seo uyumlu olacak şekilde güncellenir.
+
+                $config["allowed_types"]    = "jpg|jpeg|png";
+                $config["upload_path"]      = "uploads/$this->viewFolder/";
+                $config["file_name"]        = "$file_name";
+
+                $this->load->library("upload", $config);
+                $upload = $this->upload->do_upload("img");
+                $uploaded_file = $this->upload->data("file_name");
+
+            }
 
             $update = $this->product_model->update(
                 array(
                     "id"    => $id
                 ),
                 array(
+                    "image_url"     => $uploaded_file,
                     "name"         => $this->input->post("name"),
                     "price"         => $this->input->post("price"),
                     "description"   => $this->input->post("description")

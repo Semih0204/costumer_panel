@@ -55,7 +55,7 @@
 
 
                 <li>
-                    <a href="#">
+                    <a href="<?php echo base_url("dashboard")?>">
                         <i class="menu-icon zmdi zmdi-view-dashboard zmdi-hc-lg"></i>
                         <span class="menu-text">Dashboard</span>
                     </a>
@@ -63,7 +63,8 @@
 
                 
 
-                <!-- <li class="has-submenu">
+                <!--
+                <li class="has-submenu">
                     <a href="#" class="submenu-toggle">
                         <i class="menu-icon zmdi zmdi-apps zmdi-hc-lg"></i>
                         <span class="menu-text">Galeriler</span>
@@ -74,7 +75,8 @@
                         <li><a href="#"><span class="menu-text">Video Galerisi</span></a></li>
                         <li><a href="#"><span class="menu-text">Dosya Galerisi</span></a></li>
                     </ul>
-                </li> -->
+                </li>
+                 -->
 
 
                 <li>
@@ -84,24 +86,32 @@
                     </a>
                 </li>
 
-                <li>
-                    <a href="#">
-                        <i class="menu-icon fa fa-cubes"></i>
-                        <span class="menu-text">Şubeler</span>
-                    </a>
-                </li>
 
                 <li>
                     <a href="<?php echo base_url("customers"); ?>">
-                        <i class="menu-icon fa fa-cubes"></i>
+                        <i class="menu-icon fa fa-users"></i>
                         <span class="menu-text">Müşteriler</span>
                     </a>
                 </li>
 
                 <li>
+                    <a href="#">
+                        <i class="menu-icon fa fa-calendar"></i>
+                        <span class="menu-text">Randevular</span>
+                    </a>
+                </li>
+
+                <li>
                     <a href="<?php echo base_url("services"); ?>">
-                        <i class="menu-icon fa fa-cubes"></i>
+                        <i class="menu-icon fa fa-gift"></i>
                         <span class="menu-text">işlemler</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="<?php echo base_url("branches")?>">
+                        <i class="menu-icon fa fa-sitemap"></i>
+                        <span class="menu-text">Şubeler</span>
                     </a>
                 </li>
 
@@ -113,30 +123,33 @@
                 </li>
 
                 <li>
-                    <a href="#">
-                        <i class="menu-icon fa fa-cubes"></i>
+                    <a href="<?php echo base_url("staff")?>">
+                        <i class="menu-icon fa fa-users"></i>
                         <span class="menu-text">Çalışanlar</span>
                     </a>
                 </li>
 
-                <li>
-                    <a href="#">
-                        <i class="menu-icon fa fa-cubes"></i>
-                        <span class="menu-text">Randevular</span>
-                    </a>
-                </li>
 
                 <li>
                     <a href="#">
-                        <i class="menu-icon fa fa-cubes"></i>
+                        <i class="menu-icon fa fa-bank"></i>
                         <span class="menu-text">Kasa</span>
                     </a>
                 </li>
 
+                <li class="menu-separator"><hr></li>
+
+                <li>
+                    <a href="documentation.html">
+                        <i class="menu-icon fa fa-home"></i>
+                        <span class="menu-text">Ana Sayfa</span>
+                    </a>
+                </li>
+
                 <li>
                     <a href="#">
-                        <i class="menu-icon fa fa-cubes"></i>
-                        <span class="menu-text">Çıkış Yap</span>
+                        <i class="menu-icon zmdi zmdi-settings zmdi-hc-lg"></i>
+                        <span class="menu-text">Ayarlar</span>
                     </a>
                 </li>
 
@@ -149,15 +162,8 @@
 
                 <li>
                     <a href="#">
-                        <i class="menu-icon zmdi zmdi-settings zmdi-hc-lg"></i>
-                        <span class="menu-text">Ayarlar</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="documentation.html">
-                        <i class="menu-icon zmdi zmdi-view-web zmdi-hc-lg"></i>
-                        <span class="menu-text">Ana Sayfa</span>
+                        <i class="menu-icon fa fa-sign-out"></i>
+                        <span class="menu-text">Çıkış Yap</span>
                     </a>
                 </li>
 

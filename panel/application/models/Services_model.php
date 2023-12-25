@@ -22,7 +22,7 @@ class Services_model extends CI_Model
         return $this->db->where($where)->order_by($order)->get($this->tableName)->result();
     }
 
-    public function save($data = array())
+    public function add($data = array())
     {
         return $this->db->insert($this->tableName, $data);
     }

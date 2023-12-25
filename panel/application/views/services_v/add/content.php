@@ -1,45 +1,68 @@
-<div class="row">
+<div class="row" xmlns="http://www.w3.org/1999/html">
     <div class="col-md-12">
         <h4 class="m-b-lg">
-            Yeni Ürün Ekle
+            Yeni İşlem Ekle
         </h4>
     </div><!-- END column -->
     <div class="col-md-12">
         <div class="widget">
             <div class="widget-body">
-                <form action="<?php echo base_url("services/save"); ?>" method="post">
+                <form class="form-horizontal" enctype="multipart/form-data" action="<?php echo base_url("services/save") ?>" method="post">
+
                     <div class="form-group">
-                        <label>Başlık</label>
-                        <input class="form-control" placeholder="Başlık" name="name">
+                        <label class="col-sm-3 control-label">İşlem Fotoğrafı:</label>
+                        <div class="col-sm-6">
+                            <input type="file" class="form-control" name="img">
+                            <small class="pull-right input-form-error"> İşlem Fotoğraf Ekleyiniz. jpg - jpeg - png türünde dosyalar desteklenmelidir. </small>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">İşlem Adı:</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" placeholder="İşlem Adını Giriniz" name="name">
+                        </div>
                         <?php if(isset($form_error)){ ?>
-                            <small class="pull-right input-form-error"> <?php echo form_error("title"); ?></small>
+                            <small class="input-form-error"> <?php echo form_error("name"); ?></small>
                         <?php } ?>
                     </div>
 
                     <div class="form-group">
-                        <label>Süre</label>
-                        <input class="form-control" placeholder="Süre" name="time">
+                        <label class="col-sm-3 control-label">İşlem Süresi:</label>
+                        <div class="col-sm-6">
+                            <input type="number" class="form-control" placeholder="İşlem Süresini Giriniz" name="time">
+                        </div>
                         <?php if(isset($form_error)){ ?>
-                            <small class="pull-right input-form-error"> <?php echo form_error("title"); ?></small>
+                            <small class="input-form-error"> <?php echo form_error("time"); ?></small>
                         <?php } ?>
                     </div>
 
                     <div class="form-group">
-                        <label>Ücret</label>
-                        <input class="form-control" placeholder="Ücret" name="price">
+                        <label class="col-sm-3 control-label">İşlem Fiyatı</label>
+                        <div class="col-sm-6">
+                            <input type="number" class="form-control" name="price">
+                        </div>
                         <?php if(isset($form_error)){ ?>
-                            <small class="pull-right input-form-error"> <?php echo form_error("title"); ?></small>
+                            <small class="input-form-error"> <?php echo form_error("price"); ?></small>
                         <?php } ?>
                     </div>
 
                     <div class="form-group">
-                        <label>Açıklama</label>
-                        <textarea name="description" class="m-0" data-plugin="summernote" data-options="{height: 250}"></textarea>
+                        <label for="textarea1" class="col-sm-3 control-label">İşlem Açıklaması:</label>
+                        <div class="col-sm-6">
+                            <textarea class="form-control" id="textarea1" placeholder="İşlem Açıklamasını Giriniz." name="description"></textarea>
+                        </div>
                     </div>
-                    <button type="submit" class="btn btn-primary btn-md btn-outline">Kaydet</button>
-                    <a href="<?php echo base_url("services"); ?>" class="btn btn-md btn-danger btn-outline">İptal</a>
+                    <div class="row">
+                        <div class="col-sm-9 col-sm-offset-3">
+                            <button type="submit" class="btn btn-success">Kaydet</button>
+                            <a href="<?php echo base_url("services"); ?>" class="btn btn-md btn-danger btn-outline">İptal</a>
+                        </div>
+                    </div>
                 </form>
             </div><!-- .widget-body -->
         </div><!-- .widget -->
     </div><!-- END column -->
 </div>
+
+

@@ -1,30 +1,63 @@
-<div class="row">
+<div class="row" xmlns="http://www.w3.org/1999/html">
     <div class="col-md-12">
         <h4 class="m-b-lg">
-            <?php echo "<b>$item->title</b> kaydını düzenliyorsunuz"; ?>
+            <?php echo "<b>$item->name</b>" . " adlı ürünü düzenliyorsunuz"; ?>
         </h4>
     </div><!-- END column -->
     <div class="col-md-12">
         <div class="widget">
             <div class="widget-body">
-                <form action="<?php echo base_url("product/update/$item->id"); ?>" method="post">
+                <form class="form-horizontal" enctype="multipart/form-data" action="<?php echo base_url("product/update/$item->id") ?>" method="post">
+
                     <div class="form-group">
-                        <label>Başlık</label>
-                        <input class="form-control" placeholder="Başlık" name="title" value="<?php echo $item->title; ?>">
+                        <label class="col-sm-3 control-label">Ürün Fotoğrafı:</label>
+                        <div class="col-sm-4">
+                            <input type="file" class="form-control" name="img" value="<?php echo $item->image_url?>">
+                            <small class="pull-right input-form-error"> Ürün İçin Fotoğraf Ekleyiniz. jpg - jpeg - png türünde dosyalar desteklenmelidir. </small>
+                        </div>
+                        <div>
+                            <img width="90px" height="50px" src="<?php echo base_url("uploads/{$viewFolder}/$item->image_url"); ?>" alt="<?php echo $item->image_url; ?>" class="img-responsive">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Ürün Adı:</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" placeholder="Ürün Adını Giriniz" name="name" value="<?php echo $item->name; ?>">
+                        </div>
                         <?php if(isset($form_error)){ ?>
-                            <small class="pull-right input-form-error"> <?php echo form_error("title"); ?></small>
+                            <small class="input-form-error"> <?php echo form_error("name"); ?></small>
                         <?php } ?>
                     </div>
+
                     <div class="form-group">
-                        <label>Açıklama</label>
-                        <textarea name="description" class="m-0" data-plugin="summernote" data-options="{height: 250}">
-                            <?php echo $item->description; ?>
-                        </textarea>
+                        <label class="col-sm-3 control-label">Ürün Fiyatı</label>
+                        <div class="col-sm-6">
+                            <input type="number" class="form-control" name="price" value="<?php echo $item->price; ?>">
+                        </div>
+                        <?php if(isset($form_error)){ ?>
+                            <small class="input-form-error"><?php echo form_error("price")?></small>
+                        <?php } ?>
                     </div>
-                    <button type="submit" class="btn btn-primary btn-md btn-outline">Güncelle</button>
-                    <a href="<?php echo base_url("product"); ?>" class="btn btn-md btn-danger btn-outline">İptal</a>
+
+                    <div class="form-group">
+                        <label for="textarea1" class="col-sm-3 control-label">Ürün Açıklaması:</label>
+                        <div class="col-sm-6">
+                            <textarea class="form-control" id="textarea1" placeholder="Ürünün Açıklamasını Giriniz." name="description">
+                                <?php echo  $item->description; ?>
+                            </textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-9 col-sm-offset-3">
+                            <button type="submit" class="btn btn-success">Güncelle</button>
+                            <a href="<?php echo base_url("product"); ?>" class="btn btn-md btn-danger btn-outline">İptal</a>
+                        </div>
+                    </div>
                 </form>
             </div><!-- .widget-body -->
         </div><!-- .widget -->
     </div><!-- END column -->
 </div>
+
+

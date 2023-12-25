@@ -1,6 +1,6 @@
 <?php
 
-class Services extends CI_Controller
+class Branches extends CI_Controller
 {
     public $viewFolder = "";
 
@@ -9,9 +9,9 @@ class Services extends CI_Controller
 
         parent::__construct();
 
-        $this->viewFolder = "services_v";
+        $this->viewFolder = "branches_v";
 
-        $this->load->model("services_model");
+        $this->load->model("branches_model");
 
     }
 
@@ -20,8 +20,8 @@ class Services extends CI_Controller
         $viewData = new stdClass();
 
         /** Tablodan Verilerin Getirilmesi.. */
-        $items = $this->services_model->get_all(
-            array(), "rank ASC"
+        $items = $this->branches_model->get_all(
+            array()
         );
 
         /** View'e gönderilecek Değişkenlerin Set Edilmesi.. */
@@ -32,6 +32,24 @@ class Services extends CI_Controller
         $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
     }
 
+    public function list_detail($id){
+
+        $viewData = new stdClass();
+
+        /** Tablodan Verilerin Getirilmesi.. */
+        $item = $this->branches_model->get(
+            array(
+                "id" => $id
+            )
+        );
+
+        /** View'e gönderilecek Değişkenlerin Set Edilmesi.. */
+        $viewData->viewFolder = $this->viewFolder;
+        $viewData->subViewFolder = "list_detail";
+        $viewData->item = $item;
+
+        $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
+    }
 
     public function new_form(){
 
@@ -53,7 +71,6 @@ class Services extends CI_Controller
 
         // Kurallar yazilir..
         $this->form_validation->set_rules("name", "Başlık", "required|trim");
-        $this->form_validation->set_rules("price", "Fiyat", "required|trim");
 
         $this->form_validation->set_message(
             array(
@@ -97,26 +114,31 @@ class Services extends CI_Controller
                 $data = array(
                     "image_url"     => $uploaded_file,
                     "name"          => $this->input->post("name"),
-                    "time"          => $this->input->post("time"),
-                    "price"         => $this->input->post("price"),
-                    "description"   => $this->input->post("description"),
-                    "rank"          => 0,
+                    "email"         => $this->input->post("email"),
+                    "adress"           => $this->input->post("adress"),
+                    "phone"           => $this->input->post("phone"),
+                    "gsm"           => $this->input->post("gsm"),
+                    "province"           => $this->input->post("province"),
+                    "district"           => $this->input->post("district"),
+                    "instagram"           => $this->input->post("instagram"),
+                    "facebook"           => $this->input->post("facebook"),
+                    "mapCode"           => $this->input->post("mapCode"),
                     "isActive"      =>1,
                     "createdAt"     => date("Y-m-d H:i:s")
                 );
             } else {
                 $alert = array(
-                    "name" => "İşlem Başarısız",
-                    "text"  => "Kayıt işlemi sırasında bir problem oluştu",
+                    "title" => "İşlem Başarısız",
+                    "text"  => "KAyıt işlemi sırasında bir problem oldu",
                     "type" => "error"
                 );
 
                 $this->session->set_flashdata("alert", $alert);
-                /*redirect(base_url("admin/services/new_form"));*/
+                /*redirect(base_url("admin/branches/new_form"));*/
             }
 
 
-            $insert = $this->services_model->add($data);
+            $insert = $this->branches_model->add($data);
 
             // TODO Alert sistemi eklenecek...
             if($upload){
@@ -126,7 +148,7 @@ class Services extends CI_Controller
                     "text"  => "Kayıt işlemi başarılı bir şekilde gerçekleşti..",
                     "type"  => "success"
                 );
-                redirect(base_url("services"));
+                redirect(base_url("branches"));
 
             } else {
 
@@ -135,7 +157,7 @@ class Services extends CI_Controller
                     "text" => "Kayıt işlemi sırasında bir problemle karşılaştık!",
                     "type"  => "error"
                 );
-                redirect(base_url("services"));
+                redirect(base_url("branches"));
             }
         } else {
             $viewData = new stdClass();
@@ -160,7 +182,7 @@ class Services extends CI_Controller
         $viewData = new stdClass();
 
         /** Tablodan Verilerin Getirilmesi.. */
-        $item = $this->services_model->get(
+        $item = $this->branches_model->get(
             array(
                 "id"    => $id,
             )
@@ -182,7 +204,6 @@ class Services extends CI_Controller
 
         // Kurallar yazilir..
         $this->form_validation->set_rules("name", "Başlık", "required|trim");
-        $this->form_validation->set_rules("price", "Ücret", "required|trim");
 
         $this->form_validation->set_message(
             array(
@@ -222,27 +243,33 @@ class Services extends CI_Controller
 
             }
 
-            $update = $this->services_model->update(
+            $update = $this->branches_model->update(
                 array(
                     "id"    => $id
                 ),
                 array(
                     "image_url"     => $uploaded_file,
                     "name"         => $this->input->post("name"),
-                    "time"         => $this->input->post("time"),
-                    "price"         => $this->input->post("price"),
-                    "description"   => $this->input->post("description")
+                    "email"         => $this->input->post("email"),
+                    "adress"           => $this->input->post("adress"),
+                    "phone"           => $this->input->post("phone"),
+                    "gsm"           => $this->input->post("gsm"),
+                    "province"           => $this->input->post("province"),
+                    "district"           => $this->input->post("district"),
+                    "instagram"           => $this->input->post("instagram"),
+                    "facebook"           => $this->input->post("facebook"),
+                    "mapCode"           => $this->input->post("mapCode")
                 )
             );
 
             // TODO Alert sistemi eklenecek...
             if($update){
 
-                redirect(base_url("services"));
+                redirect(base_url("branches"));
 
             } else {
 
-                redirect(base_url("services"));
+                redirect(base_url("branches"));
 
             }
 
@@ -251,7 +278,7 @@ class Services extends CI_Controller
             $viewData = new stdClass();
 
             /** Tablodan Verilerin Getirilmesi.. */
-            $item = $this->services_model->get(
+            $item = $this->branches_model->get(
                 array(
                     "id"    => $id,
                 )
@@ -275,7 +302,7 @@ class Services extends CI_Controller
 
     public function delete($id){
 
-        $delete = $this->services_model->delete(
+        $delete = $this->branches_model->delete(
             array(
                 "id"    => $id
             )
@@ -283,9 +310,9 @@ class Services extends CI_Controller
 
         // TODO Alert Sistemi Eklenecek...
         if($delete){
-            redirect(base_url("services"));
+            redirect(base_url("branches"));
         } else {
-            redirect(base_url("services"));
+            redirect(base_url("branches"));
         }
 
     }
@@ -296,7 +323,7 @@ class Services extends CI_Controller
 
             $isActive = ($this->input->post("data") === "true") ? 1 : 0;
 
-            $this->services_model->update(
+            $this->branches_model->update(
                 array(
                     "id"    => $id
                 ),
@@ -307,7 +334,7 @@ class Services extends CI_Controller
         }
     }
 
-    public function rankSetter(){
+/*    public function rankSetter(){
 
 
         $data = $this->input->post("data");
@@ -318,7 +345,7 @@ class Services extends CI_Controller
 
         foreach ($items as $rank => $id){
 
-            $this->services_model->update(
+            $this->branches_model->update(
                 array(
                     "id"        => $id,
                     "rank !="   => $rank
@@ -330,6 +357,6 @@ class Services extends CI_Controller
 
         }
 
-    }
+    }*/
 
 }

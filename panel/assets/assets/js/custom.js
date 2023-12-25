@@ -48,6 +48,22 @@ $(document).ready(function () {
 
     })
 
+    /*Çalışmadığı için type türü date'e Çevrildi... */
+    /*function formDate() {
+        var input = document.getElementById("birthdate");
+        var value = input.value.replace(/\D/g, ''); //Sadece Sayıları Alınmasının Sağlanması.
+
+        if (value.lenght > 2 && value.lenght <= 4) {
+            input.value = value.substr(0,2) + '/' + value.substr(2);
+        } else if (value.lenght > 4 && value.lenght <= 6) {
+            input.value = value.substr(0, 2) + '/' + value.substr(2, 2) + '/' + value.substr(4);
+        } else if (value.lenght >6 ) {
+            input.value = value.substr(0, 2) + '/' + value.substr(2, 2) + '/' + value.substr(4, 4);
+        }
+    }*/
+
+
 
 
 })
+
