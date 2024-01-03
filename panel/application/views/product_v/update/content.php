@@ -12,7 +12,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Ürün Fotoğrafı:</label>
                         <div class="col-sm-4">
-                            <input type="file" class="form-control" name="img" value="<?php echo $item->image_url?>">
+                            <input type="file" class="form-control" name="img" value="<?php echo isset($form_error) ? set_value("img") : $item->image_url; ?>">
                             <small class="pull-right input-form-error"> Ürün İçin Fotoğraf Ekleyiniz. jpg - jpeg - png türünde dosyalar desteklenmelidir. </small>
                         </div>
                         <div>
@@ -23,7 +23,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Ürün Adı:</label>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" placeholder="Ürün Adını Giriniz" name="name" value="<?php echo $item->name; ?>">
+                            <input type="text" class="form-control" placeholder="Ürün Adını Giriniz" name="name" value="<?php echo isset($form_error) ? set_value("name") : $item->name; ?>">
                         </div>
                         <?php if(isset($form_error)){ ?>
                             <small class="input-form-error"> <?php echo form_error("name"); ?></small>
@@ -33,7 +33,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Ürün Fiyatı</label>
                         <div class="col-sm-6">
-                            <input type="number" class="form-control" name="price" value="<?php echo $item->price; ?>">
+                            <input type="number" class="form-control" name="price" value="<?php echo isset($form_error) ? set_value("price") : $item->price; ?>">
                         </div>
                         <?php if(isset($form_error)){ ?>
                             <small class="input-form-error"><?php echo form_error("price")?></small>

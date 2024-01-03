@@ -12,7 +12,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Müşteri Adı:</label>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" placeholder="Müşteri'nin Adını Giriniz" name="name" value="<?php echo $item->name; ?>">
+                            <input type="text" class="form-control" placeholder="Müşteri'nin Adını Giriniz" name="name" value="<?php echo isset($form_error) ? set_value("name") : $item->name; ?>">
                         </div>
                         <?php if(isset($form_error)){ ?>
                             <small class="input-form-error"> <?php echo form_error("name"); ?></small>
@@ -22,17 +22,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Müşteri Soyadı:</label>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" placeholder="Müşteri'nin Soyadını Giriniz" name="surname" value="<?php echo $item->surname; ?>">
-                        </div>
-                        <?php if(isset($form_error)){ ?>
-                            <small class="input-form-error"> <?php echo form_error("surname"); ?></small>
-                        <?php } ?>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Müşteri Soyadı:</label>
-                        <div class="col-sm-6">
-                            <input type="text" class="form-control" placeholder="Müşteri'nin Soyadını Giriniz" name="surname" value="<?php echo $item->surname; ?>">
+                            <input type="text" class="form-control" placeholder="Müşteri'nin Soyadını Giriniz" name="surname" value="<?php echo isset($form_error) ? set_value("surname") : $item->surname; ?>">
                         </div>
                         <?php if(isset($form_error)){ ?>
                             <small class="input-form-error"> <?php echo form_error("surname"); ?></small>
@@ -43,8 +33,9 @@
                         <label class="col-sm-3 control-label">Cinsiyet :</label>
                         <div class="col-sm-6">
                             <select style="height: 25px" class="col-sm-5" name="gender" id="gender" >
-                                <option value="1" C>Kadın</option>
-                                <option value="2">Erkek</option>
+
+                                <option value="1" <?php echo $item->gender==1?"selected":" "; ?>>Kadın</option>
+                                <option value="2" <?php echo $item->gender==2?"selected":" "; ?>>Erkek</option>
                             </select>
                         </div>
                         <?php if(isset($form_error)){ ?>
@@ -65,7 +56,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Müşteri Email:</label>
                         <div class="col-sm-6">
-                            <input type="email" class="form-control" placeholder="Müşteri'nin Email Adresini Giriniz" name="email" value="<?php echo $item->email; ?>">
+                            <input type="email" class="form-control" placeholder="Müşteri'nin Email Adresini Giriniz" name="email" value="<?php echo isset($form_error) ? set_value("email") : $item->email; ?>">
                         </div>
                         <?php if(isset($form_error)){ ?>
                             <small class="input-form-error"> <?php echo form_error("email"); ?></small>
@@ -75,7 +66,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Müşteri Telefon Numarası:</label>
                         <div class="col-sm-6">
-                            <input type="text" maxlength="11" class="form-control" placeholder="Müşteri'nin Telefon Numarsını Giriniz" name="gsm" value="<?php echo $item->gsm; ?>">
+                            <input type="text" maxlength="11" class="form-control" placeholder="Müşteri'nin Telefon Numarsını Giriniz" name="gsm" value="<?php echo isset($form_error) ? set_value("gsm") : $item->gsm; ?>">
                         </div>
                         <?php if(isset($form_error)){ ?>
                             <small class="input-form-error"> <?php echo form_error("gsm"); ?></small>
@@ -85,7 +76,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Müşteri Adres:</label>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" placeholder="Müşteri'nin Adresini Giriniz" name="adress" value="<?php echo $item->adress; ?>">
+                            <input type="text" class="form-control" placeholder="Müşteri'nin Adresini Giriniz" name="adress" value="<?php echo isset($form_error) ? set_value("adress") : $item->adress; ?>">
                         </div>
                         <?php if(isset($form_error)){ ?>
                             <small class="input-form-error"> <?php echo form_error("adress"); ?></small>
@@ -93,9 +84,9 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="textarea1" class="col-sm-3 control-label">Ürün Açıklaması:</label>
+                        <label for="textarea1" class="col-sm-3 control-label">Müşteri Detayları:</label>
                         <div class="col-sm-6">
-                            <textarea class="form-control" id="textarea1" placeholder="Ürünün Açıklamasını Giriniz." name="description">
+                            <textarea class="form-control" id="textarea1" placeholder="Müşteri'nin Özel Durumları ya da Alerjik Durumlarını Giriniz.." name="description">
                                 <?php echo  $item->description; ?>
                             </textarea>
                         </div>

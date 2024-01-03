@@ -13,6 +13,8 @@ class Staff extends CI_Controller
 
         $this->load->model("Staff_model");
 
+        $this->load->model("Branches_model");
+
     }
 
     public function index(){
@@ -24,10 +26,17 @@ class Staff extends CI_Controller
             array(), "rank ASC"
         );
 
+        $branches = $this->Branches_model->get_all(
+            array(
+                "isActive"  => 1
+            )
+        );
+
         /** View'e gönderilecek Değişkenlerin Set Edilmesi.. */
         $viewData->viewFolder = $this->viewFolder;
         $viewData->subViewFolder = "list";
         $viewData->items = $items;
+        $viewData->branches = $branches;
 
         $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
     }
@@ -35,6 +44,14 @@ class Staff extends CI_Controller
     public function new_form(){
 
         $viewData = new stdClass();
+
+        $branches = $this->Branches_model->get_all(
+          array(
+              "isActive" => 1
+          )
+        );
+
+        $viewData->branches = $branches;
 
         /** View'e gönderilecek Değişkenlerin Set Edilmesi.. */
         $viewData->viewFolder = $this->viewFolder;
@@ -118,6 +135,14 @@ class Staff extends CI_Controller
                 "id"    => $id,
             )
         );
+
+        $branches = $this->Branches_model->get_all(
+            array(
+                "isActive" => 1
+            )
+        );
+
+        $viewData->branches = $branches;
         
         /** View'e gönderilecek Değişkenlerin Set Edilmesi.. */
         $viewData->viewFolder = $this->viewFolder;

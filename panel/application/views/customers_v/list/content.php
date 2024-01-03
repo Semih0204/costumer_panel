@@ -40,7 +40,7 @@
                                 <td>#<?php echo $item->id; ?></td>
                                 <td><?php echo $item->name; ?></td>
                                 <td><?php echo $item->surname; ?></td>
-                                <td><?php echo $item->gender; ?></td>
+                                <td><?php echo $item->gender==1? "Kadın": "Erkek"; ?></td>
                                 <td><?php echo $item->birthday; ?></td>
                                 <td><?php echo $item->email; ?></td>
                                 <td><?php echo $item->gsm; ?></td>

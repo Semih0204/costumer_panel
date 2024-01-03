@@ -12,7 +12,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Müşteri Adı:</label>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" placeholder="Müşteri'nin Adını Giriniz" name="name">
+                            <input type="text" class="form-control" placeholder="Müşteri'nin Adını Giriniz" name="name" value="<?php echo isset($form_error) ? set_value("name") : ""; ?>">
                         </div>
                         <?php if(isset($form_error)){ ?>
                             <small class="input-form-error"> <?php echo form_error("name"); ?></small>
@@ -22,7 +22,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Müşteri Soyadı:</label>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" placeholder="Müşteri'nin Soyadını Giriniz" name="surname">
+                            <input type="text" class="form-control" placeholder="Müşteri'nin Soyadını Giriniz" name="surname" value="<?php echo isset($form_error) ? set_value("surname") : $item->surname; ?>">
                         </div>
                         <?php if(isset($form_error)){ ?>
                             <small class="input-form-error"> <?php echo form_error("surname"); ?></small>
@@ -32,7 +32,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Cinsiyet :</label>
                         <div class="col-sm-6">
-                            <select style="height: 25px" class="col-sm-5" name="gender" id="gender">
+                            <select style="height: 25px" class="col-sm-5" name="gender" id="gender" >
                                 <option value="1">Kadın</option>
                                 <option value="2">Erkek</option>
                             </select>
@@ -55,7 +55,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Müşteri Email:</label>
                         <div class="col-sm-6">
-                            <input type="email" class="form-control" placeholder="Müşteri'nin Email Adresini Giriniz" name="email">
+                            <input type="email" class="form-control" placeholder="Müşteri'nin Email Adresini Giriniz" name="email" value="<?php echo isset($form_error) ? set_value("email") : ""; ?>">
                         </div>
                         <?php if(isset($form_error)){ ?>
                             <small class="input-form-error"> <?php echo form_error("email"); ?></small>
@@ -65,7 +65,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Telefon Numarası:</label>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" maxlength="11" placeholder="Müşteri'nin Telefon Numarsını Giriniz" name="gsm">
+                            <input type="text" class="form-control" maxlength="11" placeholder="Müşteri'nin Telefon Numarsını Giriniz" name="gsm" value="<?php echo isset($form_error) ? set_value("gsm") : ""; ?>">
                         </div>
                         <?php if(isset($form_error)){ ?>
                             <small class="input-form-error"> <?php echo form_error("gsm"); ?></small>
@@ -75,7 +75,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Adres:</label>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" placeholder="Müşteri'nin Adresini Giriniz" name="adress">
+                            <input type="text" class="form-control" placeholder="Müşteri'nin Adresini Giriniz" name="adress" value="<?php echo isset($form_error) ? set_value("adress") : ""; ?>">
                         </div>
                         <?php if(isset($form_error)){ ?>
                             <small class="input-form-error"> <?php echo form_error("adress"); ?></small>

@@ -1,6 +1,6 @@
 <?php
 
-class Product extends CI_Controller
+class Users extends CI_Controller
 {
     public $viewFolder = "";
 
@@ -9,9 +9,9 @@ class Product extends CI_Controller
 
         parent::__construct();
 
-        $this->viewFolder = "product_v";
+        $this->viewFolder = "users_v";
 
-        $this->load->model("product_model");
+        $this->load->model("users_model");
 
     }
 
@@ -20,8 +20,8 @@ class Product extends CI_Controller
         $viewData = new stdClass();
 
         /** Tablodan Verilerin Getirilmesi.. */
-        $items = $this->product_model->get_all(
-            array(), "rank ASC"
+        $items = $this->users_model->get_all(
+            array()
         );
 
         /** View'e gönderilecek Değişkenlerin Set Edilmesi.. */
@@ -48,16 +48,24 @@ class Product extends CI_Controller
         //echo pathinfo($_FILES["img"]["name"], PATHINFO_FILENAME);
        // print_r($_FILES["img"]);
 
+
         $this->load->library("form_validation");
 
         // Kurallar yazilir..
-        $this->form_validation->set_rules("name", "Başlık", "required|trim|is_unique[product.name]");
-        $this->form_validation->set_rules("price", "Fiyat", "required|trim");
+        $this->form_validation->set_rules("username", "Kullanıcı Adı", "required|trim|is_unique[users.username]");
+        $this->form_validation->set_rules("name", "isim", "required|trim");
+        $this->form_validation->set_rules("surname", "soyisim", "required|trim");
+        $this->form_validation->set_rules("email", "email", "required|trim|valid_email|is_unique[users.email]");
+        $this->form_validation->set_rules("password", "password", "required|trim|min_length[8]");
+        $this->form_validation->set_rules("re_password", "re_password", "required|trim|min_length[8]|matches[password]");
+
 
         $this->form_validation->set_message(
             array(
-                "required"  => "<b>{field}</b> alanı doldurulmalıdır",
-                "is_unique" => "<b>{field}</b> Adlı Ürün zaten Bulunmaktadır"
+                "required"      => "<b>{field}</b> alanı doldurulmalıdır",
+                "valid_email"   => "Lütfen Geçerli Bir E-posta Adresi Giriniz",
+                "is_unique"     => "<b>{field}</b> adlı bir kayıt bulunmaktadır. Başka bir seçenek deneyiniz",
+                "matches"       => "Lütfen Aynı Şifreyi Giriniz"
             )
         );
 
@@ -96,35 +104,39 @@ class Product extends CI_Controller
             if ($upload) {
                 $data = array(
                     "image_url"     => $uploaded_file,
-                    "name"          => $this->input->post("name"),
-                    "price"         => $this->input->post("price"),
-                    "description"   => $this->input->post("description"),
-                    "rank"          => 0,
+                    "username"      => $this->input->post("username"),
+                    "name"      => $this->input->post("name"),
+                    "surname"      => $this->input->post("surname"),
+                    "email"         => $this->input->post("email"),
+                    "password"      => md5($this->input->post("password")),
                     "isActive"      =>1,
                     "createdAt"     => date("Y-m-d H:i:s")
                 );
             } else {
                 $alert = array(
                     "name" => "İşlem Başarısız",
-                    "text"  => "KAyıt işlemi sırasında bir problem oldu",
+                    "text"  => "Kayıt işlemi sırasında bir problem oldu",
                     "type" => "error"
                 );
 
                 $this->session->set_flashdata("alert", $alert);
-                /*redirect(base_url("admin/product/new_form"));*/
+                /*redirect(base_url("admin/users/new_form"));*/
             }
 
 
-            $insert = $this->product_model->add($data);
+            $insert = $this->users_model->add($data);
 
             // TODO Alert sistemi eklenecek...
-            if($upload) {
+            if($insert){
 
                 $alert = array(
                     "title" => "işlem Başarılı",
-                    "text" => "Kayıt işlemi başarılı bir şekilde gerçekleşti..",
-                    "type" => "success"
+                    "text"  => "Kayıt işlemi başarılı bir şekilde gerçekleşti..",
+                    "type"  => "success"
                 );
+
+                $this->session->set_flashdata("alert", $alert);
+                redirect(base_url("users"));
 
 
             } else {
@@ -134,13 +146,11 @@ class Product extends CI_Controller
                     "text" => "Kayıt işlemi sırasında bir problemle karşılaştık!",
                     "type"  => "error"
                 );
-                redirect(base_url("product"));
+
+                $this->session->set_flashdata("alert", $alert);
+
+                redirect(base_url("users"));
             }
-
-            //İşlem sonucunun sessiona yazdırılma işlemi...
-            $this->session->set_flashdata("alert", $alert);
-            redirect(base_url("product"));
-
         } else {
             $viewData = new stdClass();
 
@@ -152,10 +162,6 @@ class Product extends CI_Controller
             $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
         }
 
-        // Başarılı ise
-            // Kayit işlemi baslar
-        // Başarısız ise
-            // Hata ekranda gösterilir...
 
     }
 
@@ -164,7 +170,7 @@ class Product extends CI_Controller
         $viewData = new stdClass();
 
         /** Tablodan Verilerin Getirilmesi.. */
-        $item = $this->product_model->get(
+        $item = $this->users_model->get(
             array(
                 "id"    => $id,
             )
@@ -180,17 +186,54 @@ class Product extends CI_Controller
 
     }
 
+    public function update_password_form($id){
+
+        $viewData = new stdClass();
+
+        /** Tablodan Verilerin Getirilmesi.. */
+        $item = $this->users_model->get(
+            array(
+                "id"    => $id,
+            )
+        );
+
+        /** View'e gönderilecek Değişkenlerin Set Edilmesi.. */
+        $viewData->viewFolder = $this->viewFolder;
+        $viewData->subViewFolder = "password";
+        $viewData->item = $item;
+
+        $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
+
+
+    }
+
     public function update($id){
 
         $this->load->library("form_validation");
 
+        $oldUser = $this->users_model->get(
+            array(
+                "id"    => $id
+            )
+        );
+
+        if ($oldUser->username != $this->input->post("username")){
+            $this->form_validation->set_rules("username", "Kullanıcı Adı", "required|trim|is_unique[users.username]");
+        }
+
+        if ($oldUser->email != $this->input->post("email")){
+            $this->form_validation->set_rules("email", "email", "required|trim|valid_email|is_unique[users.email]");
+        }
+
         // Kurallar yazilir..
-        $this->form_validation->set_rules("name", "Başlık", "required|trim");
-        $this->form_validation->set_rules("price", "Ücret", "required|trim");
+
+
 
         $this->form_validation->set_message(
             array(
-                "required"  => "<b>{field}</b> alanı doldurulmalıdır"
+                "required"      => "<b>{field}</b> alanı doldurulmalıdır",
+                "valid_email"   => "Lütfen Geçerli Bir E-posta Adresi Giriniz",
+                "is_unique"     => "<b>{field}</b> adlı bir kayıt bulunmaktadır. Başka bir seçenek deneyiniz",
             )
         );
 
@@ -226,26 +269,27 @@ class Product extends CI_Controller
 
             }
 
-            $update = $this->product_model->update(
+            $update = $this->users_model->update(
                 array(
                     "id"    => $id
                 ),
                 array(
                     "image_url"     => $uploaded_file,
-                    "name"         => $this->input->post("name"),
-                    "price"         => $this->input->post("price"),
-                    "description"   => $this->input->post("description")
+                    "username"      => $this->input->post("username"),
+                    "name"      => $this->input->post("name"),
+                    "surname"      => $this->input->post("surname"),
+                    "email"         => $this->input->post("email")
                 )
             );
 
             // TODO Alert sistemi eklenecek...
             if($update){
 
-                redirect(base_url("product"));
+                redirect(base_url("users"));
 
             } else {
 
-                redirect(base_url("product"));
+                redirect(base_url("users"));
 
             }
 
@@ -254,7 +298,7 @@ class Product extends CI_Controller
             $viewData = new stdClass();
 
             /** Tablodan Verilerin Getirilmesi.. */
-            $item = $this->product_model->get(
+            $item = $this->users_model->get(
                 array(
                     "id"    => $id,
                 )
@@ -276,9 +320,96 @@ class Product extends CI_Controller
 
     }
 
+    public function update_password($id){
+
+        $this->load->library("form_validation");
+
+        $oldUser = $this->users_model->get(
+            array(
+                "id"    => $id
+            )
+        );
+
+        // Kurallar yazilir..
+        $this->form_validation->set_rules("password", "şifre", "required|trim|min_length[8]");
+          $this->form_validation->set_rules("re_password", "şifre tekrar", "required|trim|min_length[8]|matches[password]");
+
+        $this->form_validation->set_message(
+            array(
+                "required"      => "<b>{field}</b> alanı doldurulmalıdır",
+                "matches"       => "Şifreler Birbirleriyle Aynı Değil"
+            )
+        );
+
+        // Form Validation Calistirilir..
+        // TRUE - FALSE
+        $validate = $this->form_validation->run();
+
+        if($validate){
+
+
+            $update = $this->users_model->update(
+                array(
+                    "id"    => $id
+                ),
+                array(
+                    "password"      => md5($this->input->post("password"))
+                )
+            );
+
+            // TODO Alert sistemi eklenecek...
+            if($update){
+               /* if ($update) {
+                    $alert = array(
+                        "title"     => "İşlem Başarılı",
+                        "text"      => "Şifreniz Başarılı Bir Şekilde Güncellendi",
+                        "type"      => "success"
+                    );
+                }*/
+                redirect(base_url("users"));
+
+            } else {
+                /*$alert = array(
+                    "title"     => "İşlem Başarısız",
+                    "text"      => "Şifre Güncellenirken Bir Hata İle Karşılaştık",
+                    "type"      => "error"
+                );
+
+                //İşlem Sonucunun Session'a yazma işlemi...
+                $this->session->set_flashdata("alert", $alert);*/
+
+                redirect(base_url("users"));
+            }
+        } else {
+
+            $viewData = new stdClass();
+
+            /** Tablodan Verilerin Getirilmesi.. */
+            $item = $this->users_model->get(
+                array(
+                    "id"    => $id,
+                )
+            );
+
+            /** View'e gönderilecek Değişkenlerin Set Edilmesi.. */
+            $viewData->viewFolder = $this->viewFolder;
+            $viewData->subViewFolder = "password";
+            $viewData->form_error = true;
+            $viewData->item = $item;
+
+            $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
+        }
+
+        // Başarılı ise
+        // Kayit işlemi baslar
+        // Başarısız ise
+        // Hata ekranda gösterilir...
+
+    }
+
     public function delete($id){
 
-        $delete = $this->product_model->delete(
+        $delete = $this->users_model->delete(
             array(
                 "id"    => $id
             )
@@ -286,9 +417,9 @@ class Product extends CI_Controller
 
         // TODO Alert Sistemi Eklenecek...
         if($delete){
-            redirect(base_url("product"));
+            redirect(base_url("users"));
         } else {
-            redirect(base_url("product"));
+            redirect(base_url("users"));
         }
 
     }
@@ -299,7 +430,7 @@ class Product extends CI_Controller
 
             $isActive = ($this->input->post("data") === "true") ? 1 : 0;
 
-            $this->product_model->update(
+            $this->users_model->update(
                 array(
                     "id"    => $id
                 ),
@@ -310,29 +441,7 @@ class Product extends CI_Controller
         }
     }
 
-    public function rankSetter(){
 
 
-        $data = $this->input->post("data");
-
-        parse_str($data, $order);
-
-        $items = $order["ord"];
-
-        foreach ($items as $rank => $id){
-
-            $this->product_model->update(
-                array(
-                    "id"        => $id,
-                    "rank !="   => $rank
-                ),
-                array(
-                    "rank"      => $rank
-                )
-            );
-
-        }
-
-    }
 
 }

@@ -9,13 +9,33 @@
             <div class="widget-body">
                 <form class="form-horizontal" enctype="multipart/form-data" action="<?php echo base_url("staff/save") ?>" method="post">
 
+                    <!--<div class="form-group">
+                        <label class="col-sm-3 control-label">Çalıştığı Şube:</label>
+                        <div class="col-sm-6">
+                            <select class="form-control" name="id_branches" >
+                                <option value="">Çalışma Şubesini Seçiniz..</option>
+                                <?php /*foreach ($branches as $branch) { */?>
+                                    <option value="<?php /*echo $branch->id; */?>"><?php /*echo $branch->name; */?></option>
+                                <?php /*} */?>
+                            </select>
+                        </div>
+                        <?php /*if(isset($form_error)){ */?>
+                            <small class="input-form-error"> <?php /*echo form_error("is_branches"); */?></small>
+                        <?php /*} */?>
+                    </div>-->
+
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Çalıştığı Şube:</label>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" placeholder="Müşteri'nin Çalıştığı Şubeyi Seçiniz.." name="id_branches">
+                            <select class="form-control" name="id_branches">
+                                <option value="">Çalışanın'nin Çalıştığı Şubeyi Seçiniz..</option>
+                                <?php foreach ($branches as $branch) { ?>
+                                    <option value="<?php echo $branch->id; ?>"><?php echo $branch->name; ?></option>
+                                <?php } ?>
+                            </select>
                         </div>
                         <?php if(isset($form_error)){ ?>
-                            <small class="input-form-error"> <?php echo form_error("is_branches"); ?></small>
+                            <small class="input-form-error"> <?php echo form_error("id_branches"); ?></small>
                         <?php } ?>
                     </div>
 

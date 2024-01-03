@@ -10,9 +10,14 @@
                 <form class="form-horizontal" enctype="multipart/form-data" action="<?php echo base_url("staff/update/$item->id") ?>" method="post">
 
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">Çalıştığı Şubeyi Seçiniz.</label>
+                        <label class="col-sm-3 control-label">Çalıştığı Şube:</label>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" placeholder="Çalışa'nın Adını Giriniz" name="id_branches" value="<?php echo $item->id_branches; ?>">
+                            <select class="form-control" name="id_branches">
+                                <option value="<?php echo $item->id_branches; ?>">Çalışanın'nin Çalıştığı Şubeyi Seçiniz..</option>
+                                <?php foreach ($branches as $branch) { ?>
+                                    <option value="<?php echo $branch->id; ?>"><?php echo $branch->name; ?></option>
+                                <?php } ?>
+                            </select>
                         </div>
                         <?php if(isset($form_error)){ ?>
                             <small class="input-form-error"> <?php echo form_error("id_branches"); ?></small>
