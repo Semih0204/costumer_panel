@@ -13,6 +13,10 @@ class Services extends CI_Controller
 
         $this->load->model("services_model");
 
+        if (!ActiveUserControl()){
+            redirect(base_url("login"));
+        }
+
     }
 
     public function index(){
@@ -119,14 +123,13 @@ class Services extends CI_Controller
             $insert = $this->services_model->add($data);
 
             // TODO Alert sistemi eklenecek...
-            if($upload){
+            if($insert){
 
                 $alert = array(
                     "title" => "işlem Başarılı",
                     "text"  => "Kayıt işlemi başarılı bir şekilde gerçekleşti..",
                     "type"  => "success"
                 );
-                redirect(base_url("services"));
 
             } else {
 
@@ -135,8 +138,10 @@ class Services extends CI_Controller
                     "text" => "Kayıt işlemi sırasında bir problemle karşılaştık!",
                     "type"  => "error"
                 );
-                redirect(base_url("services"));
+
             }
+            $this->session->set_flashdata("alert", $alert);
+            redirect(base_url("services"));
         } else {
             $viewData = new stdClass();
 
@@ -238,13 +243,23 @@ class Services extends CI_Controller
             // TODO Alert sistemi eklenecek...
             if($update){
 
-                redirect(base_url("services"));
+                $alert = array(
+                    "title"     => "İşlem Başarılı",
+                    "text"      => "Kayıt İşlemi Başarılı",
+                    "type"      => "success"
+                );
+
 
             } else {
-
-                redirect(base_url("services"));
+                $alert = array(
+                    "title"     => "İşlem Başarısız",
+                    "text"      => "Kayıt İşlemi Sırasında Bir Problemle Karşılaştık",
+                    "type"      => "error"
+                );
 
             }
+            $this->session->set_flashdata("alert", $alert);
+            redirect(base_url("services"));
 
         } else {
 
@@ -283,10 +298,23 @@ class Services extends CI_Controller
 
         // TODO Alert Sistemi Eklenecek...
         if($delete){
-            redirect(base_url("services"));
+            $alert = array(
+                "title"     => "İşlem Başarılı",
+                "text"      => "Silme İşlemi Başarılı",
+                "type"      => "success"
+            );
+
+
         } else {
-            redirect(base_url("services"));
+            $alert = array(
+                "title"     => "İşlem Başarılı",
+                "text"      => "Silme İşlemi Sırasında Bir Problemle Karşılaştık",
+                "type"      => "error"
+            );
+
         }
+        $this->session->set_flashdata("alert", $alert);
+        redirect(base_url("services"));
 
     }
 

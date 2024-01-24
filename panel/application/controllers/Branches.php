@@ -13,6 +13,10 @@ class Branches extends CI_Controller
 
         $this->load->model("branches_model");
 
+        if (!ActiveUserControl()){
+            redirect(base_url("login"));
+        }
+
     }
 
     public function index(){
@@ -71,10 +75,17 @@ class Branches extends CI_Controller
 
         // Kurallar yazilir..
         $this->form_validation->set_rules("name", "Başlık", "required|trim");
+        $this->form_validation->set_rules("email", "Email", "required|trim|valid_email");
+        $this->form_validation->set_rules("adress", "Adres", "required|trim");
+        $this->form_validation->set_rules("phone", "Telefon-1", "required|trim");
+        $this->form_validation->set_rules("gsm", "Telefon-2", "required|trim");
+        $this->form_validation->set_rules("province", "İl", "required|trim");
+        $this->form_validation->set_rules("district", "İlçe", "required|trim");
 
         $this->form_validation->set_message(
             array(
-                "required"  => "<b>{field}</b> alanı doldurulmalıdır"
+                "required"      => "<b>{field}</b> alanı doldurulmalıdır",
+                "valid_email"   => "Lütfen Geçerli Bir Email Adresi Giriniz"
             )
         );
 
@@ -141,13 +152,15 @@ class Branches extends CI_Controller
             $insert = $this->branches_model->add($data);
 
             // TODO Alert sistemi eklenecek...
-            if($upload){
+            if($insert){
 
                 $alert = array(
                     "title" => "işlem Başarılı",
                     "text"  => "Kayıt işlemi başarılı bir şekilde gerçekleşti..",
                     "type"  => "success"
                 );
+
+                $this->session->set_flashdata("alert", $alert);
                 redirect(base_url("branches"));
 
             } else {
@@ -157,6 +170,9 @@ class Branches extends CI_Controller
                     "text" => "Kayıt işlemi sırasında bir problemle karşılaştık!",
                     "type"  => "error"
                 );
+
+                $this->session->set_flashdata("alert", $alert);
+
                 redirect(base_url("branches"));
             }
         } else {
@@ -169,11 +185,6 @@ class Branches extends CI_Controller
 
             $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
         }
-
-        // Başarılı ise
-            // Kayit işlemi baslar
-        // Başarısız ise
-            // Hata ekranda gösterilir...
 
     }
 
@@ -204,6 +215,12 @@ class Branches extends CI_Controller
 
         // Kurallar yazilir..
         $this->form_validation->set_rules("name", "Başlık", "required|trim");
+        $this->form_validation->set_rules("email", "Email", "required|trim|valid_email");
+        $this->form_validation->set_rules("adress", "Adres", "required|trim");
+        $this->form_validation->set_rules("phone", "Telefon-1", "required|trim");
+        $this->form_validation->set_rules("gsm", "Telefon-2", "required|trim");
+        $this->form_validation->set_rules("province", "İl", "required|trim");
+        $this->form_validation->set_rules("district", "İlçe", "required|trim");
 
         $this->form_validation->set_message(
             array(
@@ -265,10 +282,23 @@ class Branches extends CI_Controller
             // TODO Alert sistemi eklenecek...
             if($update){
 
+                $alert = array(
+                    "title"     => "İşlem Başarılı",
+                    "text"      => "Kayıt İşlemi Başarılı",
+                    "type"      => "success"
+                );
+
+                $this->session->set_flashdata("alert", $alert);
                 redirect(base_url("branches"));
 
             } else {
+                $alert = array(
+                    "title"     => "İşlem Başarısız",
+                    "text"      => "Kayıt İşlemi Sırasında Bir Problemle Karşılaştık",
+                    "type"      => "Error"
+                );
 
+                $this->session->set_flashdata("alert", $alert);
                 redirect(base_url("branches"));
 
             }
@@ -310,8 +340,22 @@ class Branches extends CI_Controller
 
         // TODO Alert Sistemi Eklenecek...
         if($delete){
+            $alert = array(
+                "title"     => "İşlem Başarılı",
+                "text"      => "Silme İşlemi Başarılı",
+                "type"      => "success"
+            );
+
+            $this->session->set_flashdata("alert", $alert);
             redirect(base_url("branches"));
         } else {
+            $alert = array(
+                "title"     => "İşlem Başarısız",
+                "text"      => "Silme İşlemi Sırasında Bir Problemle Karşılaştık",
+                "type"      => "error"
+            );
+
+            $this->session->set_flashdata("alert", $alert);
             redirect(base_url("branches"));
         }
 
@@ -333,30 +377,5 @@ class Branches extends CI_Controller
             );
         }
     }
-
-/*    public function rankSetter(){
-
-
-        $data = $this->input->post("data");
-
-        parse_str($data, $order);
-
-        $items = $order["ord"];
-
-        foreach ($items as $rank => $id){
-
-            $this->branches_model->update(
-                array(
-                    "id"        => $id,
-                    "rank !="   => $rank
-                ),
-                array(
-                    "rank"      => $rank
-                )
-            );
-
-        }
-
-    }*/
 
 }

@@ -1,3 +1,5 @@
+<?php $user = ActiveUserControl(); ?>
+
 <aside id="menubar" class="menubar light">
     <div class="app-user">
         <div class="media">
@@ -8,24 +10,24 @@
             </div>
             <div class="media-body">
                 <div class="foldable">
-                    <h5><a href="#" class="username">John Doe</a></h5>
+                    <h5><a href="#" class="username"><?php echo($user->name . " " . $user->surname) ?></a></h5>
                     <ul>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle usertitle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <small>Web Developer</small>
+                                <small>İşlemler</small>
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu animated flipInY">
                                 <li>
-                                    <a class="text-color" href="/index.html">
+                                    <a class="text-color" href="<?php echo base_url(); ?>">
                                         <span class="m-r-xs"><i class="fa fa-home"></i></span>
-                                        <span>Home</span>
+                                        <span>Anasayfa</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="text-color" href="profile.html">
+                                    <a class="text-color" href="<?php echo base_url("users/update_form/$user->id"); ?>">
                                         <span class="m-r-xs"><i class="fa fa-user"></i></span>
-                                        <span>Profile</span>
+                                        <span>Profil</span>
                                     </a>
                                 </li>
                                 <li>
@@ -36,9 +38,9 @@
                                 </li>
                                 <li role="separator" class="divider"></li>
                                 <li>
-                                    <a class="text-color" href="logout.html">
+                                    <a class="text-color" href="<?php echo base_url("logout")?>">
                                         <span class="m-r-xs"><i class="fa fa-power-off"></i></span>
-                                        <span>Home</span>
+                                        <span>Çıkış Yap</span>
                                     </a>
                                 </li>
                             </ul>
@@ -80,7 +82,7 @@
 
 
                 <li>
-                    <a href="<?php echo base_url("product"); ?>">
+                    <a href="<?php echo base_url("products"); ?>">
                         <i class="menu-icon fa fa-cubes"></i>
                         <span class="menu-text">Ürünler</span>
                     </a>
@@ -95,7 +97,7 @@
                 </li>
 
                 <li>
-                    <a href="#">
+                    <a href="<?php echo base_url("appointments")?>">
                         <i class="menu-icon fa fa-calendar"></i>
                         <span class="menu-text">Randevular</span>
                     </a>
@@ -161,7 +163,7 @@
                 </li>
 
                 <li>
-                    <a href="#">
+                    <a href="<?php echo base_url("logout")?>">
                         <i class="menu-icon fa fa-sign-out"></i>
                         <span class="menu-text">Çıkış Yap</span>
                     </a>

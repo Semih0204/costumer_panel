@@ -1,6 +1,6 @@
 <?php
 
-class Staff extends CI_Controller
+class Appointments extends CI_Controller
 {
     public $viewFolder = "";
 
@@ -9,11 +9,16 @@ class Staff extends CI_Controller
 
         parent::__construct();
 
-        $this->viewFolder = "Staff_v";
+        $this->viewFolder = "Appointments_v";
 
-        $this->load->model("Staff_model");
+        $this->load->model("Appointments_model");
 
+        $this->load->model("Customers_model");
         $this->load->model("Branches_model");
+        $this->load->model("Staff_model");
+        $this->load->model("Services_model");
+        $this->load->model("Products_model");
+
 
         if (!ActiveUserControl()){
             redirect(base_url("login"));
@@ -26,21 +31,15 @@ class Staff extends CI_Controller
         $viewData = new stdClass();
 
         /** Tablodan Verilerin Getirilmesi.. */
-        $items = $this->Staff_model->get_all(
-            array(), "rank ASC"
+        $items = $this->Appointments_model->get_all(
+            array()
         );
 
-        $branches = $this->Branches_model->get_all(
-            array(
-                "isActive"  => 1
-            )
-        );
 
         /** View'e gönderilecek Değişkenlerin Set Edilmesi.. */
         $viewData->viewFolder = $this->viewFolder;
         $viewData->subViewFolder = "list";
         $viewData->items = $items;
-        $viewData->branches = $branches;
 
         $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
     }
@@ -49,13 +48,41 @@ class Staff extends CI_Controller
 
         $viewData = new stdClass();
 
+        $customers = $this->Customers_model->get_all(
+            array(
+                "isActive"  => 1
+            )
+        );
+
         $branches = $this->Branches_model->get_all(
           array(
               "isActive" => 1
           )
         );
 
+        $staff = $this->Staff_model->get_all(
+            array(
+                "isActive" => 1
+            )
+        );
+
+        $services = $this->Services_model->get_all(
+            array(
+                "isActive" => 1
+            )
+        );
+
+        $products = $this->Products_model->get_all(
+            array(
+                "isActive" => 1
+            )
+        );
+
         $viewData->branches = $branches;
+        $viewData->customers = $customers;
+        $viewData->staff = $staff;
+        $viewData->services = $services;
+        $viewData->products = $products;
 
         /** View'e gönderilecek Değişkenlerin Set Edilmesi.. */
         $viewData->viewFolder = $this->viewFolder;
@@ -71,7 +98,6 @@ class Staff extends CI_Controller
 
         // Kurallar yazilir..
         $this->form_validation->set_rules("name", "İsim", "required|trim");
-        $this->form_validation->set_rules("surname", "İsim", "required|trim");
 
         $this->form_validation->set_message(
             array(
@@ -79,21 +105,19 @@ class Staff extends CI_Controller
             )
         );
 
-        // Form Validation Calistirilir..
-        // TRUE - FALSE
         $validate = $this->form_validation->run();
 
         if($validate){
 
-            $insert = $this->Staff_model->save(
+            $insert = $this->Appointments_model->save(
                 array(
-                    "id_branches"  => $this->input->post("id_branches"),
                     "name"         => $this->input->post("name"),
-                    "surname"         => $this->input->post("surname"),
-                    "position"         => $this->input->post("position"),
-                    "gsm"   => $this->input->post("gsm"),
-                    "email"   => $this->input->post("email"),
-                    "wage"   => $this->input->post("wage"),
+                    "id_customers" => $this->input->post("id_customers"),
+                    "id_branches"  => $this->input->post("id_branches"),
+                    "id_staff"     => $this->input->post("id_staff"),
+                    "id_services"  => $this->input->post("id_services"),
+                    "id_products"  => $this->input->post("id_products"),
+                    "description"  => $this->input->post("description"),
                     "isActive"      => 1,
                     "createdAt"     => date("Y-m-d H:i:s")
                 )
@@ -108,7 +132,7 @@ class Staff extends CI_Controller
                 );
 
                 $this->session->set_flashdata("alert", $alert);
-                redirect(base_url("Staff"));
+                redirect(base_url("Appointments"));
 
             } else {
                 $alert = array(
@@ -118,7 +142,7 @@ class Staff extends CI_Controller
                 );
 
                 $this->session->set_flashdata("alert", $alert);
-                redirect(base_url("Staff"));
+                redirect(base_url("Appointments"));
 
             }
 
@@ -141,7 +165,7 @@ class Staff extends CI_Controller
         $viewData = new stdClass();
 
         /** Tablodan Verilerin Getirilmesi.. */
-        $item = $this->Staff_model->get(
+        $item = $this->Appointments_model->get(
             array(
                 "id"    => $id,
             )
@@ -153,12 +177,41 @@ class Staff extends CI_Controller
             )
         );
 
+        $customers = $this->Customers_model->get_all(
+            array(
+                "isActive" => 1
+            )
+        );
+
+        $staff = $this->Staff_model->get_all(
+            array(
+                "isActive" => 1
+            )
+        );
+
+        $services = $this->Services_model->get_all(
+            array(
+                "isActive" => 1
+            )
+        );
+
+        $products = $this->Products_model->get_all(
+            array(
+                "isActive" => 1
+            )
+        );
+
         $viewData->branches = $branches;
         
         /** View'e gönderilecek Değişkenlerin Set Edilmesi.. */
         $viewData->viewFolder = $this->viewFolder;
         $viewData->subViewFolder = "update";
         $viewData->item = $item;
+        $viewData->branches = $branches;
+        $viewData->customers = $customers;
+        $viewData->staff = $staff;
+        $viewData->services = $services;
+        $viewData->products = $products;
 
         $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
 
@@ -184,7 +237,7 @@ class Staff extends CI_Controller
 
         if($validate){
 
-            $update = $this->Staff_model->update(
+            $update = $this->Appointments_model->update(
                 array(
                     "id"    => $id
                 ),
@@ -208,7 +261,7 @@ class Staff extends CI_Controller
                 );
 
                 $this->session->set_flashdata("alert", $alert);
-                redirect(base_url("Staff"));
+                redirect(base_url("Appointments"));
 
             } else {
                 $alert = array(
@@ -218,7 +271,7 @@ class Staff extends CI_Controller
                 );
 
                 $this->session->set_flashdata("alert", $alert);
-                redirect(base_url("Staff"));
+                redirect(base_url("Appointments"));
 
             }
 
@@ -227,7 +280,7 @@ class Staff extends CI_Controller
             $viewData = new stdClass();
 
             /** Tablodan Verilerin Getirilmesi.. */
-            $item = $this->Staff_model->get(
+            $item = $this->Appointments_model->get(
                 array(
                     "id"    => $id,
                 )
@@ -251,7 +304,7 @@ class Staff extends CI_Controller
 
     public function delete($id){
 
-        $delete = $this->Staff_model->delete(
+        $delete = $this->Appointments_model->delete(
             array(
                 "id"    => $id
             )
@@ -266,7 +319,7 @@ class Staff extends CI_Controller
             );
 
             $this->session->set_flashdata("alert", $alert);
-            redirect(base_url("Staff"));
+            redirect(base_url("Appointments"));
         } else {
             $alert = array(
                 "title"     => "İşlem Başarısız ",
@@ -275,7 +328,7 @@ class Staff extends CI_Controller
             );
 
             $this->session->set_flashdata("alert", $alert);
-            redirect(base_url("Staff"));
+            redirect(base_url("Appointments"));
         }
 
     }
@@ -286,7 +339,7 @@ class Staff extends CI_Controller
 
             $isActive = ($this->input->post("data") === "true") ? 1 : 0;
 
-            $this->Staff_model->update(
+            $this->Appointments_model->update(
                 array(
                     "id"    => $id
                 ),
@@ -297,29 +350,5 @@ class Staff extends CI_Controller
         }
     }
 
-    public function rankSetter(){
-
-
-        $data = $this->input->post("data");
-
-        parse_str($data, $order);
-
-        $items = $order["ord"];
-
-        foreach ($items as $rank => $id){
-
-            $this->Staff_model->update(
-                array(
-                    "id"        => $id,
-                    "rank !="   => $rank
-                ),
-                array(
-                    "rank"      => $rank
-                )
-            );
-
-        }
-
-    }
 
 }

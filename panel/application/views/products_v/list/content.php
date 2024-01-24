@@ -2,7 +2,7 @@
     <div class="col-md-12">
         <h4 class="m-b-lg">
             Ürün Listesi
-            <a href="<?php echo base_url("product/new_form"); ?>" class="btn btn-outline btn-primary btn-xs pull-right"> <i class="fa fa-plus"></i> Yeni Ekle</a>
+            <a href="<?php echo base_url("Products/new_form"); ?>" class="btn btn-outline btn-primary btn-xs pull-right"> <i class="fa fa-plus"></i> Yeni Ekle</a>
         </h4>
     </div><!-- END column -->
     <div class="col-md-12">
@@ -11,7 +11,7 @@
             <?php if(empty($items)) { ?>
 
                 <div class="alert alert-info text-center">
-                    <p>Burada herhangi bir veri bulunmamaktadır. Eklemek için lütfen <a href="<?php echo base_url("product/new_form"); ?>">tıklayınız</a></p>
+                    <p>Burada herhangi bir veri bulunmamaktadır. Eklemek için lütfen <a href="<?php echo base_url("Products/new_form"); ?>">tıklayınız</a></p>
                 </div>
 
             <?php } else { ?>
@@ -27,7 +27,7 @@
                         <th>Durumu</th>
                         <th>İşlem</th>
                     </thead>
-                    <tbody class="sortable" data-url="<?php echo base_url("product/rankSetter"); ?>">
+                    <tbody class="sortable" data-url="<?php echo base_url("Products/rankSetter"); ?>">
 
                         <?php foreach($items as $item) { ?>
 
@@ -41,7 +41,7 @@
                                 <td><?php echo $item->description; ?></td>
                                 <td>
                                     <input
-                                        data-url="<?php echo base_url("product/isActiveSetter/$item->id"); ?>"
+                                        data-url="<?php echo base_url("Products/isActiveSetter/$item->id"); ?>"
                                         class="isActive"
                                         type="checkbox"
                                         data-switchery
@@ -51,11 +51,11 @@
                                 </td>
                                 <td>
                                     <button
-                                        data-url="<?php echo base_url("product/delete/$item->id"); ?>"
+                                        data-url="<?php echo base_url("Products/delete/$item->id"); ?>"
                                         class="btn btn-sm btn-danger btn-outline remove-btn">
                                         <i class="fa fa-trash"></i> Sil
                                     </button>
-                                    <a href="<?php echo base_url("product/update_form/$item->id"); ?>" class="btn btn-sm btn-info btn-outline"><i class="fa fa-pencil-square-o"></i> Düzenle</a>
+                                    <a href="<?php echo base_url("Products/update_form/$item->id"); ?>" class="btn btn-sm btn-info btn-outline"><i class="fa fa-pencil-square-o"></i> Düzenle</a>
                                 </td>
                             </tr>
 

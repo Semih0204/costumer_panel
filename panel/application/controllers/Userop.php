@@ -15,6 +15,11 @@ class Userop extends CI_Controller
 
     public function login()
     {
+        if (ActiveUserControl())
+        {
+            redirect(base_url());
+        }
+
         $viewData = new stdClass();
 
         /** View'e gönderilecek Değişkenlerin Set Edilmesi.. */
@@ -25,6 +30,10 @@ class Userop extends CI_Controller
     }
 
     public function do_login() {
+        if (ActiveUserControl())
+        {
+            redirect(base_url());
+        }
 
         $this->load->library("form_validation");
 
@@ -58,7 +67,8 @@ class Userop extends CI_Controller
             $user = $this->users_model->get(
                 array(
                     "email"     => $this->input->post("email"),
-                    "password"  => md5($this->input->post("password"))
+                    "password"  => md5($this->input->post("password")),
+                    "isActive"  => 1
                 )
             );
 
@@ -85,12 +95,49 @@ class Userop extends CI_Controller
                 );
 
                 $this->session->set_userdata("user", $user);
+                $this->session->set_userdata("alert", $alert);
 
                 redirect(base_url("login"));
 
             }
         }
 
+    }
+
+    public function logout(){
+        $this->session->unset_userdata("user");
+        redirect(base_url("login"));
+    }
+
+    public function sendEmail()
+    {
+        $config = array(
+            "protocol"  => "smtp",  // "smpt" yerine "smtp" olmalı
+            "smtp_host" => "mail.app.smartvtag.com",  // "smpt_host" yerine "smtp_host" olmalı
+            "smtp_port" => "465",  // Gmail için genellikle 465 portu kullanılır
+            "smtp_user" => "semih@app.smartvtag.com",
+            "smtp_pass" => "132123qwe-*/",
+            "starttls"  => true,
+            "charset"   => "utf-8",
+            "mailtype"  => "html",
+            "wordwrap"  => true,
+            "newline"   => "\r\n"
+        );
+
+        $this->load->library("email", $config);
+
+        $this->email->from("semih@app.smartvtag.com", "Control Paneli");
+        $this->email->to("semih@app.smartvtag.com");
+        $this->email->subject("Müşteri Yönetim Paneli İçin Deneme Mail'i...");
+        $this->email->message("Bu Bir Deneme E-Postasıdır....");
+
+        $send = $this->email->send();
+
+        if ($send){
+            echo "E-posta Başarılı Bir Şekilde Gönderilmiştir";
+        } else {
+            echo $this->email->print_debugger();
+        }
     }
 
 }

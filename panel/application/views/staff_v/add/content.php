@@ -9,21 +9,6 @@
             <div class="widget-body">
                 <form class="form-horizontal" enctype="multipart/form-data" action="<?php echo base_url("staff/save") ?>" method="post">
 
-                    <!--<div class="form-group">
-                        <label class="col-sm-3 control-label">Çalıştığı Şube:</label>
-                        <div class="col-sm-6">
-                            <select class="form-control" name="id_branches" >
-                                <option value="">Çalışma Şubesini Seçiniz..</option>
-                                <?php /*foreach ($branches as $branch) { */?>
-                                    <option value="<?php /*echo $branch->id; */?>"><?php /*echo $branch->name; */?></option>
-                                <?php /*} */?>
-                            </select>
-                        </div>
-                        <?php /*if(isset($form_error)){ */?>
-                            <small class="input-form-error"> <?php /*echo form_error("is_branches"); */?></small>
-                        <?php /*} */?>
-                    </div>-->
-
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Çalıştığı Şube:</label>
                         <div class="col-sm-6">
@@ -42,7 +27,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Çalışanın Adı:</label>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" placeholder="Çalışanın'nin Adını Giriniz" name="name">
+                            <input type="text" class="form-control" placeholder="Çalışanın'nin Adını Giriniz" name="name" value="<?php echo isset($form_error) ? set_value("name") : ""; ?>">
                         </div>
                         <?php if(isset($form_error)){ ?>
                             <small class="input-form-error"> <?php echo form_error("name"); ?></small>
@@ -52,7 +37,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Çalışanın Soyadı:</label>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" placeholder="Çalışanın'nin Soyadını Giriniz" name="surname">
+                            <input type="text" class="form-control" placeholder="Çalışanın'nin Soyadını Giriniz" name="surname" value="<?php echo isset($form_error) ? set_value("surname") : ""; ?>">
                         </div>
                         <?php if(isset($form_error)){ ?>
                             <small class="input-form-error"> <?php echo form_error("surname"); ?></small>
@@ -62,7 +47,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Çalıştığı Pozisyon:</label>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" placeholder="Çalışma Pozisyonunu" name="position">
+                            <input type="text" class="form-control" placeholder="Çalışma Pozisyonunu" name="position" value="<?php echo isset($form_error) ? set_value("position") : ""; ?>">
                         </div>
                         <?php if(isset($form_error)){ ?>
                             <small class="input-form-error"> <?php echo form_error("position"); ?></small>
@@ -72,7 +57,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Telefon Numarası:</label>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" maxlength="11" placeholder="Çalışan'nın Telefon Numarsını Giriniz" name="gsm">
+                            <input type="text" class="form-control" maxlength="11" placeholder="Çalışan'nın Telefon Numarsını Giriniz" name="gsm" value="<?php echo isset($form_error) ? set_value("gsm") : ""; ?>">
                         </div>
                         <?php if(isset($form_error)){ ?>
                             <small class="input-form-error"> <?php echo form_error("gsm"); ?></small>
@@ -82,7 +67,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Çalışan Email:</label>
                         <div class="col-sm-6">
-                            <input type="email" class="form-control" placeholder="Çalışan'nın Email Adresini Giriniz" name="email">
+                            <input type="email" class="form-control" placeholder="Çalışan'nın Email Adresini Giriniz" name="email" value="<?php echo isset($form_error) ? set_value("email") : ""; ?>">
                         </div>
                         <?php if(isset($form_error)){ ?>
                             <small class="input-form-error"> <?php echo form_error("email"); ?></small>
@@ -94,7 +79,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Maaş:</label>
                         <div class="col-sm-6">
-                            <input type="number" class="form-control" placeholder="Çalışanın Maaşını Giriniz" name="wage">
+                            <input type="number" class="form-control" placeholder="Çalışanın Maaşını Giriniz" name="wage" value="<?php echo isset($form_error) ? set_value("wage") : ""; ?>">
                         </div>
                         <?php if(isset($form_error)){ ?>
                             <small class="input-form-error"> <?php echo form_error("wage"); ?></small>

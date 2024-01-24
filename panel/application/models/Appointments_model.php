@@ -1,9 +1,9 @@
 <?php
 
-class Product_model extends CI_Model
+class Appointments_model extends CI_Model
 {
 
-    public $tableName = "products";
+    public $tableName = "appointments";
 
     public function __construct()
     {
@@ -13,17 +13,16 @@ class Product_model extends CI_Model
 
     public function get($where = array())
     {
-        //result yerine row yazıldığında bütün kayıtlar değil sadece çağırılan veri getirilir.
         return $this->db->where($where)->get($this->tableName)->row();
     }
 
     /** Tüm Kayıtları bana getirecek olan metot.. */
     public function get_all($where = array(), $order = "id ASC")
-    {
+    { 
         return $this->db->where($where)->order_by($order)->get($this->tableName)->result();
     }
 
-    public function add($data = array())
+    public function save($data = array())
     {
         return $this->db->insert($this->tableName, $data);
     }

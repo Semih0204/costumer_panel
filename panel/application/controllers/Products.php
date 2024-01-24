@@ -1,6 +1,6 @@
 <?php
 
-class Product extends CI_Controller
+class Products extends CI_Controller
 {
     public $viewFolder = "";
 
@@ -9,9 +9,13 @@ class Product extends CI_Controller
 
         parent::__construct();
 
-        $this->viewFolder = "product_v";
+        $this->viewFolder = "Products_v";
 
-        $this->load->model("product_model");
+        $this->load->model("Products_model");
+
+        if (!ActiveUserControl()){
+            redirect(base_url("login"));
+        }
 
     }
 
@@ -20,7 +24,7 @@ class Product extends CI_Controller
         $viewData = new stdClass();
 
         /** Tablodan Verilerin Getirilmesi.. */
-        $items = $this->product_model->get_all(
+        $items = $this->Products_model->get_all(
             array(), "rank ASC"
         );
 
@@ -51,7 +55,7 @@ class Product extends CI_Controller
         $this->load->library("form_validation");
 
         // Kurallar yazilir..
-        $this->form_validation->set_rules("name", "Başlık", "required|trim|is_unique[product.name]");
+        $this->form_validation->set_rules("name", "Başlık", "required|trim|is_unique[Products.name]");
         $this->form_validation->set_rules("price", "Fiyat", "required|trim");
 
         $this->form_validation->set_message(
@@ -105,27 +109,26 @@ class Product extends CI_Controller
                 );
             } else {
                 $alert = array(
-                    "name" => "İşlem Başarısız",
-                    "text"  => "KAyıt işlemi sırasında bir problem oldu",
+                    "title" => "İşlem Başarısız",
+                    "text"  => "Kayıt işlemi sırasında bir problem oldu",
                     "type" => "error"
                 );
 
                 $this->session->set_flashdata("alert", $alert);
-                /*redirect(base_url("admin/product/new_form"));*/
+                /* redirect(base_url("admin/Products/new_form"));*/
             }
 
 
-            $insert = $this->product_model->add($data);
+            $insert = $this->Products_model->add($data);
 
             // TODO Alert sistemi eklenecek...
-            if($upload) {
+            if($insert) {
 
                 $alert = array(
                     "title" => "işlem Başarılı",
                     "text" => "Kayıt işlemi başarılı bir şekilde gerçekleşti..",
                     "type" => "success"
                 );
-
 
             } else {
 
@@ -134,12 +137,12 @@ class Product extends CI_Controller
                     "text" => "Kayıt işlemi sırasında bir problemle karşılaştık!",
                     "type"  => "error"
                 );
-                redirect(base_url("product"));
+                redirect(base_url("Products"));
             }
 
             //İşlem sonucunun sessiona yazdırılma işlemi...
             $this->session->set_flashdata("alert", $alert);
-            redirect(base_url("product"));
+            redirect(base_url("Products"));
 
         } else {
             $viewData = new stdClass();
@@ -152,11 +155,6 @@ class Product extends CI_Controller
             $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
         }
 
-        // Başarılı ise
-            // Kayit işlemi baslar
-        // Başarısız ise
-            // Hata ekranda gösterilir...
-
     }
 
     public function update_form($id){
@@ -164,7 +162,7 @@ class Product extends CI_Controller
         $viewData = new stdClass();
 
         /** Tablodan Verilerin Getirilmesi.. */
-        $item = $this->product_model->get(
+        $item = $this->Products_model->get(
             array(
                 "id"    => $id,
             )
@@ -226,7 +224,7 @@ class Product extends CI_Controller
 
             }
 
-            $update = $this->product_model->update(
+            $update = $this->Products_model->update(
                 array(
                     "id"    => $id
                 ),
@@ -241,11 +239,27 @@ class Product extends CI_Controller
             // TODO Alert sistemi eklenecek...
             if($update){
 
-                redirect(base_url("product"));
+                $alert = array(
+                    "title" => "İşlem Başarılı",
+                    "text"  => "Güncelleme İşlemi Başarılı",
+                    "type"  => "success"
+                );
+
+                $this->session->set_flashdata("alert", $alert);
+
+                redirect(base_url("Products"));
 
             } else {
 
-                redirect(base_url("product"));
+                $alert = array(
+                    "title" => "İşlem Başarısız",
+                    "text"  => "Güncelleme İşlemi Sırasında Bir Sorun Oluştu",
+                    "type"  => "error"
+                );
+
+                $this->session->set_flashdata("alert", $alert);
+
+                redirect(base_url("Products"));
 
             }
 
@@ -254,7 +268,7 @@ class Product extends CI_Controller
             $viewData = new stdClass();
 
             /** Tablodan Verilerin Getirilmesi.. */
-            $item = $this->product_model->get(
+            $item = $this->Products_model->get(
                 array(
                     "id"    => $id,
                 )
@@ -278,7 +292,7 @@ class Product extends CI_Controller
 
     public function delete($id){
 
-        $delete = $this->product_model->delete(
+        $delete = $this->Products_model->delete(
             array(
                 "id"    => $id
             )
@@ -286,9 +300,25 @@ class Product extends CI_Controller
 
         // TODO Alert Sistemi Eklenecek...
         if($delete){
-            redirect(base_url("product"));
+            $alert = array(
+                "title" => "İşlem Başarılı",
+                "text"  => "Silme İşlemi Başarılı",
+                "type"  => "success"
+            );
+
+            $this->session->set_flashdata("alert", $alert);
+
+            redirect(base_url("Products"));
         } else {
-            redirect(base_url("product"));
+            $alert = array(
+                "title" => "İşlem Başarısız",
+                "text"  => "Silme İşlemi Sırasında Bir Sorun Oluştu",
+                "type"  => "error"
+            );
+
+            $this->session->set_flashdata("alert", $alert);
+
+            redirect(base_url("Products"));
         }
 
     }
@@ -299,7 +329,7 @@ class Product extends CI_Controller
 
             $isActive = ($this->input->post("data") === "true") ? 1 : 0;
 
-            $this->product_model->update(
+            $this->Products_model->update(
                 array(
                     "id"    => $id
                 ),
@@ -321,7 +351,7 @@ class Product extends CI_Controller
 
         foreach ($items as $rank => $id){
 
-            $this->product_model->update(
+            $this->Products_model->update(
                 array(
                     "id"        => $id,
                     "rank !="   => $rank

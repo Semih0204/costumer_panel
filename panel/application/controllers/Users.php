@@ -13,6 +13,10 @@ class Users extends CI_Controller
 
         $this->load->model("users_model");
 
+        if (!ActiveUserControl()){
+            redirect(base_url("login"));
+        }
+
     }
 
     public function index(){
@@ -225,8 +229,6 @@ class Users extends CI_Controller
             $this->form_validation->set_rules("email", "email", "required|trim|valid_email|is_unique[users.email]");
         }
 
-        // Kurallar yazilir..
-
 
 
         $this->form_validation->set_message(
@@ -240,9 +242,7 @@ class Users extends CI_Controller
         // Form Validation Calistirilir..
         // TRUE - FALSE
         $validate = $this->form_validation->run();
-
         if($validate){
-
             $uploaded_file = "";
 
             if($_FILES["img"]["name"] == "") {
@@ -266,7 +266,6 @@ class Users extends CI_Controller
                 $this->load->library("upload", $config);
                 $upload = $this->upload->do_upload("img");
                 $uploaded_file = $this->upload->data("file_name");
-
             }
 
             $update = $this->users_model->update(
@@ -280,15 +279,26 @@ class Users extends CI_Controller
                     "surname"      => $this->input->post("surname"),
                     "email"         => $this->input->post("email")
                 )
-            );
 
+            );
             // TODO Alert sistemi eklenecek...
             if($update){
+                $alert = array(
+                    "title"     => "İşlem Başarılı",
+                    "text"      => "Güncelleme İşlemi Başarılı Bir Şekilde Gerçekleşti",
+                    "type"      => "success"
+                );
 
+                $this->session->set_flashdata("alert", $alert);
                 redirect(base_url("users"));
 
             } else {
-
+                $alert = array(
+                    "title"     => "İşlem Başarısız",
+                    "text"      => "Güncelleme İşlemi Sırasında Bir Problemle Karşılaştık",
+                    "type"      => "error"
+                );
+                $this->session->set_flashdata("alert", $alert);
                 redirect(base_url("users"));
 
             }
@@ -359,24 +369,24 @@ class Users extends CI_Controller
 
             // TODO Alert sistemi eklenecek...
             if($update){
-               /* if ($update) {
-                    $alert = array(
-                        "title"     => "İşlem Başarılı",
-                        "text"      => "Şifreniz Başarılı Bir Şekilde Güncellendi",
-                        "type"      => "success"
-                    );
-                }*/
+                $alert = array(
+                    "title"     => "İşlem Başarılı",
+                    "text"      => "Şifreniz Başarılı Bir Şekilde Güncellendi",
+                    "type"      => "success"
+                );
+
+                $this->session->set_flashdata("alert", $alert);
                 redirect(base_url("users"));
 
             } else {
-                /*$alert = array(
+                $alert = array(
                     "title"     => "İşlem Başarısız",
                     "text"      => "Şifre Güncellenirken Bir Hata İle Karşılaştık",
                     "type"      => "error"
                 );
 
                 //İşlem Sonucunun Session'a yazma işlemi...
-                $this->session->set_flashdata("alert", $alert);*/
+                $this->session->set_flashdata("alert", $alert);
 
                 redirect(base_url("users"));
             }
@@ -400,11 +410,6 @@ class Users extends CI_Controller
             $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
         }
 
-        // Başarılı ise
-        // Kayit işlemi baslar
-        // Başarısız ise
-        // Hata ekranda gösterilir...
-
     }
 
     public function delete($id){
@@ -417,8 +422,22 @@ class Users extends CI_Controller
 
         // TODO Alert Sistemi Eklenecek...
         if($delete){
+            $alert = array(
+                "title"     => "İşlem Başarılı",
+                "text"      => "Silme İşlemi Başarılı Bir Şekilde Gerçekleşti",
+                "type"      => "success"
+            );
+
+            $this->session->set_flashdata("alert", $alert);
             redirect(base_url("users"));
         } else {
+            $alert = array(
+                "title"     => "İşlem Başarısız",
+                "text"      => "Silme İşlemi Sırasında Bir Problemle Karşılaştık",
+                "type"      => "error"
+            );
+
+            $this->session->set_flashdata("alert", $alert);
             redirect(base_url("users"));
         }
 

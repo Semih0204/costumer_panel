@@ -7,7 +7,7 @@
     <div class="col-md-12">
         <div class="widget">
             <div class="widget-body">
-                <form class="form-horizontal" enctype="multipart/form-data" action="<?php echo base_url("product/save") ?>" method="post">
+                <form class="form-horizontal" enctype="multipart/form-data" action="<?php echo base_url("Products/save") ?>" method="post">
 
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Ürün Fotoğrafı:</label>
@@ -46,7 +46,7 @@
                     <div class="row">
                         <div class="col-sm-9 col-sm-offset-3">
                             <button type="submit" class="btn btn-success">Kaydet</button>
-                            <a href="<?php echo base_url("product"); ?>" class="btn btn-md btn-danger btn-outline">İptal</a>
+                            <a href="<?php echo base_url("Products"); ?>" class="btn btn-md btn-danger btn-outline">İptal</a>
                         </div>
                     </div>
                 </form>

@@ -13,6 +13,10 @@ class Customers extends CI_Controller
 
         $this->load->model("Customers_model");
 
+        if (!ActiveUserControl()){
+            redirect(base_url("login"));
+        }
+
     }
 
     public function index(){
@@ -87,10 +91,23 @@ class Customers extends CI_Controller
             // TODO Alert sistemi eklenecek...
             if($insert){
 
+                $alert = array(
+                    "title"     => "İşlem Başarılı",
+                    "text"      => "Kayıt İşlemi Başarılı",
+                    "type"      => "success"
+                );
+
+                $this->session->set_flashdata("alert", $alert);
                 redirect(base_url("Customers"));
 
             } else {
+                $alert = array(
+                    "title"     => "İşlem Başarısız",
+                    "text"      => "Kayıt İşlemi Sırasında Bir Problemle Karşılaştık",
+                    "type"      => "Error"
+                );
 
+                $this->session->set_flashdata("alert", $alert);
                 redirect(base_url("Customers"));
 
             }
@@ -174,11 +191,23 @@ class Customers extends CI_Controller
 
             // TODO Alert sistemi eklenecek...
             if($update){
+                $alert = array(
+                    "title"     => "İşlem Başarılı",
+                    "text"      => "Kayıt İşlemi Başarılı",
+                    "type"      => "success"
+                );
 
+                $this->session->set_flashdata("alert", $alert);
                 redirect(base_url("Customers"));
 
             } else {
+                $alert = array(
+                    "title"     => "İşlem Başarısız",
+                    "text"      => "Kayıt İşlemi Sırasında Bir Problemle Karşılaştık",
+                    "type"      => "error"
+                );
 
+                $this->session->set_flashdata("alert", $alert);
                 redirect(base_url("Customers"));
 
             }
@@ -220,8 +249,22 @@ class Customers extends CI_Controller
 
         // TODO Alert Sistemi Eklenecek...
         if($delete){
+            $alert = array(
+                "title"     => "İşlem Başarılı",
+                "text"      => "Silme İşlemi Başarılı",
+                "type"      => "success"
+            );
+
+            $this->session->set_flashdata("alert", $alert);
             redirect(base_url("Customers"));
         } else {
+            $alert = array(
+                "title"     => "İşlem Başarısız",
+                "text"      => "Silme İşlemi Sırasında Bir Problemle Karşılaştık",
+                "type"      => "error"
+            );
+
+            $this->session->set_flashdata("alert", $alert);
             redirect(base_url("Customers"));
         }
 

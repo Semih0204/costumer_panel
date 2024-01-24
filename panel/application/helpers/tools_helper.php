@@ -8,15 +8,50 @@
     return strtolower(str_replace($turkce, $convert, $text));
     }
 
+    //Randevu modülünde işlemin yapılacığı Şubenin id sinde ismini değiştirme işlemi..
     function getBranchName($id)
     {
         $ci = &get_instance();
         $ci->load->database();
-        $customers = $ci->db->where(array("id" => $id))->get("branches")->row();
-        return $customers->name;
+        $branches = $ci->db->where(array("id" => $id))->get("branches")->row();
+        return $branches->name;
+    }
+    //Randevu modülünde Müşterinin ismini dinamik olarak değiştirme işlemi....
+    function getCustomersName($id)
+    {
+        $ci = &get_instance();
+        $ci->load->database();
+        $appointments = $ci->db->where(array("id" => $id))->get("customers")->row();
+        return $appointments->name;
     }
 
-    if(!function_exists('selected_control'))
+    //Randevu tablosunda işlemi gerçekleştirecek olan çalışanın ismini dinamik olarak değiştirme işlemii.....
+    function getStaffName($id)
+    {
+        $ci = &get_instance();
+        $ci->load->database();
+        $appointments = $ci->db->where(array("id" => $id))->get("staff")->row();
+        return $appointments->name;
+    }
+
+    function getServicesName($id)
+    {
+        $ci = &get_instance();
+        $ci->load->database();
+        $appointments = $ci->db->where(array("id" => $id))->get("services")->row();
+        return $appointments->name;
+    }
+    function getProductName($id)
+    {
+        $ci = &get_instance();
+        $ci->load->database();
+        $appointments = $ci->db->where(array("id" => $id))->get("products")->row();
+        return $appointments->name;
+    }
+
+
+
+if(!function_exists('selected_control'))
     {
         function selected_control($data, $selected_value)
         {
@@ -34,3 +69,17 @@
         }
     }
 
+    function ActiveUserControl()
+    {
+        $process = &get_instance();
+
+        $user = $process->session->userdata("user");
+
+        if ($user)
+            return $user;
+        else
+            return false;
+
+    }
+
+?>

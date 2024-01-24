@@ -20,7 +20,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Şube Adı:</label>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" placeholder="Şube Adını Giriniz" name="name">
+                            <input type="text" class="form-control" placeholder="Şube Adını Giriniz" name="name" value="<?php echo isset($form_error) ? set_value("name") : ""; ?>">
                         </div>
                         <?php if(isset($form_error)){ ?>
                             <small class="input-form-error"> <?php echo form_error("name"); ?></small>
@@ -30,7 +30,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Şube Email:</label>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" placeholder="Şube Emailini Giriniz..." name="email">
+                            <input type="text" class="form-control" placeholder="Şube Emailini Giriniz..." name="email" value="<?php echo isset($form_error) ? set_value("email") : ""; ?>">
                         </div>
                         <?php if(isset($form_error)){ ?>
                             <small class="input-form-error"> <?php echo form_error("email"); ?></small>
@@ -40,7 +40,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Şube Adresi:</label>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" placeholder="Şube Adresini Giriniz..." name="adress">
+                            <input type="text" class="form-control" placeholder="Şube Adresini Giriniz..." name="adress" value="<?php echo isset($form_error) ? set_value("adress") : ""; ?>">
                         </div>
                         <?php if(isset($form_error)){ ?>
                             <small class="input-form-error"> <?php echo form_error("adress"); ?></small>
@@ -50,37 +50,55 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Şube Telefonları:</label>
                         <div class="col-sm-3">
-                            <input type="text" class="form-control" placeholder="Şube Sabit Telefon Numarasını Giriniz..." name="phone">
+                            <input type="text" maxlength="11" class="form-control" placeholder="Şube Sabit Telefon Numarasını Giriniz..." name="phone" value="<?php echo isset($form_error) ? set_value("phone") : ""; ?>">
                         </div>
                         <div class="col-sm-3">
-                            <input type="text" class="form-control" placeholder="Şube Telefon Numarsını Giriniz..." name="gsm">
+                            <input type="text" maxlength="11" class="form-control" placeholder="Şube Telefon Numarsını Giriniz..." name="gsm" value="<?php echo isset($form_error) ? set_value("gsm") : ""; ?>">
                         </div>
+                        <?php if(isset($form_error)){ ?>
+                            <small class="input-form-error"> <?php echo form_error("phone"); ?></small>
+                        <?php } ?>
+                        <?php if(isset($form_error)){ ?>
+                            <small class="input-form-error"> <?php echo form_error("gsm"); ?></small>
+                        <?php } ?>
                     </div>
 
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Şube İl-İlçe:</label>
                         <div class="col-sm-3">
-                            <input type="text" class="form-control" placeholder="Şube Bulunduğu İli Giriniz..." name="province">
+                            <input type="text" class="form-control" placeholder="Şube Bulunduğu İli Giriniz..." name="province" value="<?php echo isset($form_error) ? set_value("province") : ""; ?>">
                         </div>
                         <div class="col-sm-3">
-                            <input type="text" class="form-control" placeholder="Şube Bulunduğu İlçeyi Giriniz..." name="district">
+                            <input type="text" class="form-control" placeholder="Şube Bulunduğu İlçeyi Giriniz..." name="district" value="<?php echo isset($form_error) ? set_value("district") : ""; ?>">
                         </div>
+                        <?php if(isset($form_error)){ ?>
+                            <small class="input-form-error"> <?php echo form_error("province"); ?></small>
+                        <?php } ?>
+                        <?php if(isset($form_error)){ ?>
+                            <small class="input-form-error"> <?php echo form_error("district"); ?></small>
+                        <?php } ?>
                     </div>
 
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Şube Sosyal Medya:</label>
                         <div class="col-sm-3">
-                            <input type="text" class="form-control" placeholder="Şube'nin İnstagram Bağlantı Linkini Giriniz..." name="instagram">
+                            <input type="text" class="form-control" placeholder="Şube'nin İnstagram Bağlantı Linkini Giriniz..." name="instagram" value="<?php echo isset($form_error) ? set_value("instagram") : ""; ?>">
                         </div>
                         <div class="col-sm-3">
-                            <input type="text" class="form-control" placeholder="Şube'nin Facebook Bağlantı Linkini Giriniz..." name="facebook">
+                            <input type="text" class="form-control" placeholder="Şube'nin Facebook Bağlantı Linkini Giriniz..." name="facebook" value="<?php echo isset($form_error) ? set_value("facebook") : ""; ?>">
                         </div>
+                        <?php if(isset($form_error)){ ?>
+                            <small class="input-form-error"> <?php echo form_error("instagram"); ?></small>
+                        <?php } ?>
+                        <?php if(isset($form_error)){ ?>
+                            <small class="input-form-error"> <?php echo form_error("facebook"); ?></small>
+                        <?php } ?>
                     </div>
 
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Şube Harita:</label>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" placeholder="Şube Harita Linkini Giriniz..." name="mapCode">
+                            <input type="text" class="form-control" placeholder="Şube Harita Linkini Giriniz..." name="mapCode" value="<?php echo isset($form_error) ? set_value("mapCode") : ""; ?>">
                         </div>
                     </div>
 

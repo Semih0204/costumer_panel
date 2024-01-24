@@ -20,7 +20,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">İşlem Adı:</label>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" placeholder="İşlem Adını Giriniz" name="name">
+                            <input type="text" class="form-control" placeholder="İşlem Adını Giriniz" name="name" value="<?php echo isset($form_error) ? set_value("name") : ""; ?>">
                         </div>
                         <?php if(isset($form_error)){ ?>
                             <small class="input-form-error"> <?php echo form_error("name"); ?></small>
@@ -30,7 +30,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">İşlem Süresi:</label>
                         <div class="col-sm-6">
-                            <input type="number" class="form-control" placeholder="İşlem Süresini Giriniz" name="time">
+                            <input type="number" class="form-control" placeholder="İşlem Süresini Giriniz" name="time" value="<?php echo isset($form_error) ? set_value("time") : ""; ?>">
                         </div>
                         <?php if(isset($form_error)){ ?>
                             <small class="input-form-error"> <?php echo form_error("time"); ?></small>
@@ -40,7 +40,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">İşlem Fiyatı</label>
                         <div class="col-sm-6">
-                            <input type="number" class="form-control" name="price">
+                            <input type="number" class="form-control" name="price" value="<?php echo isset($form_error) ? set_value("price") : ""; ?>">
                         </div>
                         <?php if(isset($form_error)){ ?>
                             <small class="input-form-error"> <?php echo form_error("price"); ?></small>

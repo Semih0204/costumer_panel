@@ -22,7 +22,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Müşteri Soyadı:</label>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" placeholder="Müşteri'nin Soyadını Giriniz" name="surname" value="<?php echo isset($form_error) ? set_value("surname") : $item->surname; ?>">
+                            <input type="text" class="form-control" placeholder="Müşteri'nin Soyadını Giriniz" name="surname" value="<?php echo isset($form_error) ? set_value("surname") : ""; ?>">
                         </div>
                         <?php if(isset($form_error)){ ?>
                             <small class="input-form-error"> <?php echo form_error("surname"); ?></small>
@@ -33,6 +33,7 @@
                         <label class="col-sm-3 control-label">Cinsiyet :</label>
                         <div class="col-sm-6">
                             <select style="height: 25px" class="col-sm-5" name="gender" id="gender" >
+                                <option value="0">Lütfen Cinsiyet Seçiniz</option>
                                 <option value="1">Kadın</option>
                                 <option value="2">Erkek</option>
                             </select>
