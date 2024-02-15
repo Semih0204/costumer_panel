@@ -113,7 +113,7 @@ class Userop extends CI_Controller
     {
         $config = array(
             "protocol"  => "smtp",  // "smpt" yerine "smtp" olmalı
-            "smtp_host" => "mail.app.smartvtag.com",  // "smpt_host" yerine "smtp_host" olmalı
+            "smtp_host" => "ssl://smtp.gmail.com",  // "smpt_host" yerine "smtp_host" olmalı
             "smtp_port" => "465",  // Gmail için genellikle 465 portu kullanılır
             "smtp_user" => "semih@app.smartvtag.com",
             "smtp_pass" => "132123qwe-*/",
@@ -127,7 +127,7 @@ class Userop extends CI_Controller
         $this->load->library("email", $config);
 
         $this->email->from("semih@app.smartvtag.com", "Control Paneli");
-        $this->email->to("semih@app.smartvtag.com");
+        $this->email->to("mehmet.semih22@gmail.com");
         $this->email->subject("Müşteri Yönetim Paneli İçin Deneme Mail'i...");
         $this->email->message("Bu Bir Deneme E-Postasıdır....");
 

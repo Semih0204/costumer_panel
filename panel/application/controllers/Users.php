@@ -34,7 +34,10 @@ class Users extends CI_Controller
         $viewData->items = $items;
 
         $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
+        $this->load->view("includes/aside", $viewData);
     }
+
+    
 
     public function new_form(){
 

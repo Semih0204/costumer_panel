@@ -5,8 +5,10 @@
         <div class="media">
             <div class="media-left">
                 <div class="avatar avatar-md avatar-circle">
-                    <a href="#"><img class="img-responsive" src="<?php echo base_url("assets"); ?>/assets/images/221.jpg" alt="avatar"/></a>
-                </div><!-- .avatar -->
+
+                    <img width="90px" height="50px" src="<?php echo base_url("uploads/users_V/$user->image_url"); ?>" alt="<?php echo $user->image_url; ?>" class="img-responsive">
+
+                </div><!-- User image location -->
             </div>
             <div class="media-body">
                 <div class="foldable">

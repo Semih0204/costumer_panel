@@ -10,7 +10,7 @@
                 <form class="form-horizontal" enctype="multipart/form-data" action="<?php echo base_url("users/update/$item->id") ?>" method="post">
 
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">Ürün Fotoğrafı:</label>
+                        <label class="col-sm-3 control-label">Kullanıcı Fotoğrafı:</label>
                         <div class="col-sm-6">
                             <input type="file" class="form-control" name="img">
                             <small class="pull-right input-form-error"> Kullanıcı İçin Fotoğraf Ekleyiniz. jpg - jpeg - png türünde dosyalar desteklenmelidir. </small>
